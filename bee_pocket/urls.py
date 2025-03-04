@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from pocket_app.views import index_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('creategoal/', include('create_app.urls'),  name='create_item'),
     path('myaccount/', include('admin_app.urls'), name='manage_account'),
     path('accounts/', include('allauth.urls')),
+    path('', index_page, name='home'),
 ]
