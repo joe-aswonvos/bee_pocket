@@ -5,4 +5,4 @@ from django.http import HttpResponse
 
 
 def create_item(request):
-    return HttpResponse("This is the create item page.")
+    return render(request, 'create.html')

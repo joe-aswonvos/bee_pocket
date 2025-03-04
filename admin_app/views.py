@@ -5,4 +5,4 @@ from django.http import HttpResponse
 
 
 def manage_account(request):
-    return HttpResponse("This is the manage account page.")
+    return render(request, 'admin.html')
