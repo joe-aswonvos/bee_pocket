@@ -3,9 +3,126 @@
 {% block title %}Manage Account{% endblock %}
 
 {% block content %}
+<div class="container">
+    <h2>Manage Account</h2>
+    <p>This is the manage account page.</p>
+    <p>Additional account management options will be available here.</p>
 
-<h2>Manage Account</h2>
-<p>This is the manage account page.</p>
-<p>Additional account management options will be available here.</p>
+    <!-- Buttons to create new permissions and BeePocket -->
+    <div class="mb-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPermissionModal">Create New Permission</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createBeePocketModal">Create New BeePocket</button>
+    </div>
 
+    <!-- Bootstrap cards for existing permissions and BeePockets -->
+    <div class="row">
+        <!-- Permissions Card -->
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    Permissions
+                </div>
+                <div class="card-body">
+                    {% for permission in permissions %}
+                        <h5 class="card-title">{{ permission.user.username }}</h5>
+                        <p class="card-text">Permission: {{ permission.permission }}</p>
+                        <p class="card-text">BeePocket: {{ permission.beepocket.beepocket_name }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- BeePockets Card -->
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    BeePockets
+                </div>
+                <div class="card-body">
+                    {% for beepocket in beepockets %}
+                        <h5 class="card-title">{{ beepocket.beepocket_name }}</h5>
+                        <p class="card-text">Units: {{ beepocket.units }}</p>
+                        <p class="card-text">Starting Balance: {{ beepocket.starting_balance }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create Permission Modal -->
+<div class="modal fade" id="createPermissionModal" tabindex="-1" aria-labelledby="createPermissionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createPermissionModalLabel">Create New Permission</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_permission' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="user" class="form-label">User</label>
+                        <select class="form-select" id="user" name="user">
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="beepocket" class="form-label">BeePocket</label>
+                        <select class="form-select" id="beepocket" name="beepocket">
+                            {% for beepocket in beepockets %}
+                                <option value="{{ beepocket.id }}">{{ beepocket.beepocket_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="permission" class="form-label">Permission</label>
+                        <select class="form-select" id="permission" name="permission">
+                            <option value="manager">Manager</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Permission</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create BeePocket Modal -->
+<div class="modal fade" id="createBeePocketModal" tabindex="-1" aria-labelledby="createBeePocketModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createBeePocketModalLabel">Create New BeePocket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_beepocket' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="beepocket_name" class="form-label">BeePocket Name</label>
+                        <input type="text" class="form-control" id="beepocket_name" name="beepocket_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="units" class="form-label">Units</label>
+                        <select class="form-select" id="units" name="units">
+                            <option value="non-currency">Non-currency</option>
+                            <option value="GBP">GBP</option>
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="starting_balance" class="form-label">Starting Balance</label>
+                        <input type="number" class="form-control" id="starting_balance" name="starting_balance" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create BeePocket</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

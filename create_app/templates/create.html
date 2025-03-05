@@ -1,8 +1,175 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %}Create Item{% endblock %} 
+{% block title %}Create Item{% endblock %}
 
 {% block content %}
-<h2>Create Item</h2>
-<p>This is the create item page.</p>
+<div class="container">
+    <h2>Create Item</h2>
+    <p>This is the create item page.</p>
+
+    <!-- Button to create new Item -->
+    <div class="mb-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createItemModal">Create New Item</button>
+    </div>
+
+    <!-- Bootstrap cards for existing Items -->
+    <div class="row">
+        {% for item in items %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        {{ item.item_name }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ item.item_description }}</p>
+                        <p class="card-text">Category: {{ item.item_category.category_name }}</p>
+                        <p class="card-text">Type: {{ item.item_type }}</p>
+                        <p class="card-text">Value: {{ item.item_value }}</p>
+                        <a href="{% url 'edit_item' item.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Button to create new ItemInstance -->
+    <div class="mb-3">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">Create New ItemInstance</button>
+    </div>
+
+    <!-- Dropdown to select BeePocket -->
+    <div class="mb-3">
+        <label for="beepocket_select" class="form-label">Select BeePocket</label>
+        <select class="form-select" id="beepocket_select" name="beepocket_select" onchange="showItemInstances(this.value)">
+            <option value="">Select BeePocket</option>
+            {% for beepocket in beepockets %}
+                <option value="{{ beepocket.id }}">{{ beepocket.beepocket_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Bootstrap cards for existing ItemInstances -->
+    <div id="item_instances" class="row">
+        <!-- Item instances will be dynamically loaded here based on selected BeePocket -->
+    </div>
+</div>
+
+<!-- Create Item Modal -->
+<div class="modal fade" id="createItemModal" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createItemModalLabel">Create New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_item' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="item_name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="item_name" name="item_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="item_description" class="form-label">Item Description</label>
+                        <input type="text" class="form-control" id="item_description" name="item_description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="item_category" class="form-label">Item Category</label>
+                        <select class="form-select" id="item_category" name="item_category">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="item_type" class="form-label">Item Type</label>
+                        <select class="form-select" id="item_type" name="item_type">
+                            <option value="Task">Task</option>
+                            <option value="Consequence">Consequence</option>
+                            <option value="Reward">Reward</option>
+                            <option value="Adjustment">Adjustment</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="item_value" class="form-label">Item Value</label>
+                        <input type="number" class="form-control" id="item_value" name="item_value" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expireon" class="form-label">Expire On</label>
+                        <input type="datetime-local" class="form-control" id="expireon" name="expireon" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create ItemInstance Modal -->
+<div class="modal fade" id="createItemInstanceModal" tabindex="-1" aria-labelledby="createItemInstanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createItemInstanceModalLabel">Create New ItemInstance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_item_instance' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="item" class="form-label">Item</label>
+                        <select class="form-select" id="item" name="item">
+                            {% for item in items %}
+                                <option value="{{ item.id }}">{{ item.item_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="beepocket" class="form-label">BeePocket</label>
+                        <select class="form-select" id="beepocket" name="beepocket">
+                            {% for beepocket in beepockets %}
+                                <option value="{{ beepocket.id }}">{{ beepocket.beepocket_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Create ItemInstance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showItemInstances(beepocketId) {
+    // Fetch and display item instances for the selected BeePocket
+    fetch(`/create/item_instances/${beepocketId}/`)
+        .then(response => response.json())
+        .then(data => {
+            const itemInstancesDiv = document.getElementById('item_instances');
+            itemInstancesDiv.innerHTML = '';
+            data.item_instances.forEach(instance => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4';
+                card.innerHTML = `
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            ${instance.item_name}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Created By: ${instance.created_by}</p>
+                            <p class="card-text">Created On: ${instance.created_on}</p>
+                            <p class="card-text">Active Status: ${instance.active_status}</p>
+                            <p class="card-text">Approved: ${instance.approved}</p>
+                            <a href="/create/approve_item_instance/${instance.id}/" class="btn btn-success">Approve</a>
+                            <a href="/create/edit_item_instance/${instance.id}/" class="btn btn-warning">Edit</a>
+                            <a href="/create/delete_item_instance/${instance.id}/" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                `;
+                itemInstancesDiv.appendChild(card);
+            });
+        });
+}
+</script>
 {% endblock %}

@@ -21,7 +21,7 @@ from pocket_app.views import index_page
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('username/', include('pocket_app.urls'), name='userpage'),
-    path('creategoal/', include('create_app.urls'),  name='create_item'),
+    path('create/', include('create_app.urls'),  name='create_item'),
     path('myaccount/', include('admin_app.urls'), name='manage_account'),
     path('accounts/', include('allauth.urls')),
     path('', index_page, name='home'),

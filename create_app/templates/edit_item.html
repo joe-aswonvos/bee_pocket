@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Item</h2>
+    <form method="post" action="{% url 'edit_item' item.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="item_name" class="form-label">Item Name</label>
+            <input type="text" class="form-control" id="item_name" name="item_name" value="{{ item.item_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="item_description" class="form-label">Item Description</label>
+            <input type="text" class="form-control" id="item_description" name="item_description" value="{{ item.item_description }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="item_category" class="form-label">Item Category</label>
+            <select class="form-select" id="item_category" name="item_category">
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == item.item_category.id %}selected{% endif %}>{{ category.category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="item_type" class="form-label">Item Type</label>
+            <select class="form-select" id="item_type" name="item_type">
+                <option value="Task" {% if item.item_type == 'Task' %}selected{% endif %}>Task</option>
+                <option value="Consequence" {% if item.item_type == 'Consequence' %}selected{% endif %}>Consequence</option>
+                <option value="Reward" {% if item.item_type == 'Reward' %}selected{% endif %}>Reward</option>
+                <option value="Adjustment" {% if item.item_type == 'Adjustment' %}selected{% endif %}>Adjustment</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="item_value" class="form-label">Item Value</label>
+            <input type="number" class="form-control" id="item_value" name="item_value" value="{{ item.item_value }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="expireon" class="form-label">Expire On</label>
+            <input type="datetime-local" class="form-control" id="expireon" name="expireon" value="{{ item.expireon|date:'Y-m-d\TH:i' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}
