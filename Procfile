@@ -1,0 +1,1 @@
+web: gunicorn bee_pocket.wsgi --log-file -

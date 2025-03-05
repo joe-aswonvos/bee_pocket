@@ -36,7 +36,9 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
+AUTH_USER_MODEL = 'admin_app.User'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 LOGIN_REDIRECT_URL = "/"
@@ -58,11 +60,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'admin_app',
     'create_app',
-    'pocket_app',
+    'pocket_app.apps.PocketAppConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,6 +116,7 @@ else:
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

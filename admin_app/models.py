@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
 
 # Create your models here.
 
@@ -10,7 +12,28 @@ This is the model for the admin_app. It contains the following classes:
     - User Permission (The account super-user can assign permissions for users to access the BeePocket)
 """
 
-class User(models.Model):
+class UserManager(BaseUserManager):
+    def create_user(self, email, username, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, username=username, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email, username, password, **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
     """
     This is the User model. It is authenticated by Allauth.
     Each user has a uniqueID assigned by Django and the following attributes
@@ -20,7 +43,15 @@ class User(models.Model):
     """
     username = models.CharField(max_length=50)
     email = models.EmailField(max_length=50)
-    user_icon = models.URLField(max_length=200)
+    user_icon = models.URLField(max_length=200, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    password = models.CharField(max_length=128, default='defaultpassword')
+    
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.username
@@ -67,7 +98,7 @@ class BeePocket(models.Model):
     beepocket_name = models.CharField(max_length=50)
     creation_date = models.DateTimeField(auto_now_add=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    units = models.CharField(max_length=10, choices=UNIT_CHOICES)
+    units = models.CharField(max_length=20, choices=UNIT_CHOICES)
     starting_balance = models.IntegerField()
 
     def __str__(self):

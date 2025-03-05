@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from admin_app.models import *
 
 # Create your models here.
@@ -95,15 +93,6 @@ class Item(models.Model):
     def __str__(self):
         return self.item_name
 
-    @receiver(post_save, sender=Item)
-    def update_repeatability(sender, instance, **kwargs):
-        if instance.repeatID is None:
-            instance.repeatability = False
-        else:
-            instance.repeatability = True
-        instance.save()
-
-
 class ItemInstance(models.Model):
     """
     This is the ItemInstance model. It is a transaction in a pocket.
@@ -121,9 +110,9 @@ class ItemInstance(models.Model):
     """
     item = models.ForeignKey(Item, on_delete=models.PROTECT)
     BeePocketID = models.ForeignKey(BeePocket, on_delete=models.CASCADE)
-    Lasteditedby = models.ForeignKey(User, on_delete=models.PROTECT)
+    Lasteditedby = models.ForeignKey(User, on_delete=models.PROTECT, related_name='last_edited_items')
     Lasteditedon = models.DateTimeField(auto_now=True)
-    CreatedBy = models.ForeignKey(User, on_delete=models.PROTECT)
+    CreatedBy = models.ForeignKey(User, on_delete=models.PROTECT, related_name='created_items')
     CreatedOn = models.DateTimeField(auto_now_add=True)
     ActiveStatus = models.BooleanField(default=True)
     Approved = models.BooleanField(default=False)
