@@ -3,17 +3,33 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
-from admin_app.models import User, BeePocket, UserPermission
+from admin_app.models import User, BeePocket, UserPermission, Account
 from pocket_app.models import Item, Category, ItemInstance
 
 @login_required
 def create_item(request):
     user = request.user
+    try:
+        # Get the first account owned by the user
+        account = Account.objects.filter(account_owner=user).first()
+        if account:
+            account_id = account.id
+        else:
+            account_id = None
+    except Exception as e:
+        print(f"Error retrieving account: {str(e)}")
+        account_id = None
+        
     permissions = UserPermission.objects.filter(user=user, permission='manager')
     beepockets = BeePocket.objects.filter(id__in=permissions.values('beepocket'))
+    
+    # Get default beepocket (first active one)
+    default_beepocket = None
+    if beepockets.exists():
+        default_beepocket = beepockets.first()
+    
     items = Item.objects.filter(createdby=user)
     categories = Category.objects.all()
-    default_expireon = (timezone.now() + timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M')
 
     if request.method == 'POST':
         item_name = request.POST['item_name']
@@ -35,8 +51,9 @@ def create_item(request):
     context = {
         'items': items,
         'categories': categories,
-        'beepockets': beepockets,    
-        'default_expireon': default_expireon,
+        'beepockets': beepockets,
+        'default_beepocket': default_beepocket,
+        'account_id': account_id,
     }
     return render(request, 'create.html', context)
 

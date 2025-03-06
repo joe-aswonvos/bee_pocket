@@ -37,9 +37,10 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
               {% if user.is_authenticated %}
-                {% if account.id %}
+                {% is_account_owner user as is_owner %}
+                {% if is_owner and account_id %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'manage_account' account.id %}">MyAccount</a>
+                    <a class="nav-link" href="{% url 'manage_account' account_id %}">MyAccount</a>
                   </li>
                 {% endif %}
                 {% for permission in user.userpermission_set.all|unique_manager_permission %}

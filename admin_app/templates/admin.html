@@ -4,20 +4,18 @@
 
 {% block content %}
 <div class="container">
-    <h2>Manage Account</h2>
-    <p>This is the manage account page.</p>
-    <p>Additional account management options will be available here.</p>
+    <h2 class="text-center my-4">Manage Account</h2>
+    <p class="text-center">This is the manage account page.</p>
+    <p class="text-center">Additional account management options will be available here.</p>
 
-    <!-- Buttons to create new permissions and BeePocket -->
-    <div class="mb-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPermissionModal">Create New Permission</button>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createBeePocketModal">Create New BeePocket</button>
-    </div>
-
-    <!-- Scrollable Bootstrap cards for existing permissions and BeePockets -->
     <div class="row">
         <!-- Permissions Card -->
         <div class="col-md-6">
+            <!-- Create Permission Button -->
+            <div class="d-flex justify-content-center mb-3">
+                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createPermissionModal">Create New Permission</button>
+            </div>
+            
             <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Permissions
@@ -42,6 +40,11 @@
 
         <!-- BeePockets Card -->
         <div class="col-md-6">
+            <!-- Create BeePocket Button -->
+            <div class="d-flex justify-content-center mb-3">
+                <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createBeePocketModal">Create New BeePocket</button>
+            </div>
+            
             <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     BeePockets

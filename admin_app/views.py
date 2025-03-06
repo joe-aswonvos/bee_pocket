@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
 from .models import User, Account, BeePocket, UserPermission
 from .decorators import account_owner_required
 
@@ -10,7 +9,7 @@ def manage_account(request, account_id):
     """
     View to manage user permissions and beepockets for an account.
     """
-    user = request.user
+    
     account = Account.objects.get(id=account_id)
     permissions = UserPermission.objects.filter(account=account)
     beepockets = BeePocket.objects.filter(account=account)

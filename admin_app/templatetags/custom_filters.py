@@ -1,4 +1,5 @@
 from django import template
+from admin_app.models import Account
 
 register = template.Library()
 
@@ -11,3 +12,12 @@ def unique_manager_permission(permissions):
             unique_permissions.append(permission)
             seen.add(permission.permission)
     return unique_permissions
+
+@register.simple_tag
+def is_account_owner(user):
+    try:
+        Account.objects.get(account_owner=user)
+        return True
+    except Account.DoesNotExist:
+        return False
+
