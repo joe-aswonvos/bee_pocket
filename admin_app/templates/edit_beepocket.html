@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Edit BeePocket{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit BeePocket</h2>
+    <form method="post" action="{% url 'edit_beepocket' account.id beepocket.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="beepocket_name" class="form-label">BeePocket Name</label>
+            <input type="text" class="form-control" id="beepocket_name" name="beepocket_name" value="{{ beepocket.beepocket_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="units" class="form-label">Units</label>
+            <select class="form-select" id="units" name="units">
+                <option value="non-currency" {% if beepocket.units == 'non-currency' %}selected{% endif %}>Non-currency</option>
+                <option value="GBP" {% if beepocket.units == 'GBP' %}selected{% endif %}>GBP</option>
+                <option value="EUR" {% if beepocket.units == 'EUR' %}selected{% endif %}>EUR</option>
+                <option value="USD" {% if beepocket.units == 'USD' %}selected{% endif %}>USD</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="starting_balance" class="form-label">Starting Balance</label>
+            <input type="number" class="form-control" id="starting_balance" name="starting_balance" value="{{ beepocket.starting_balance }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

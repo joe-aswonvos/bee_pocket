@@ -95,10 +95,6 @@
                         <label for="item_value" class="form-label">Item Value</label>
                         <input type="number" class="form-control" id="item_value" name="item_value" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="expireon" class="form-label">Expire On</label>
-                        <input type="datetime-local" class="form-control" id="expireon" name="expireon" required>
-                    </div>
                     <button type="submit" class="btn btn-primary">Create Item</button>
                 </form>
             </div>
@@ -132,6 +128,10 @@
                                 <option value="{{ beepocket.id }}">{{ beepocket.beepocket_name }}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="expireon" class="form-label">Expire On (default 24 hours)</label>
+                        <input type="datetime-local" class="form-control" id="expireon" name="expireon" value="{{ default_expireon }}" required>
                     </div>
                     <button type="submit" class="btn btn-success">Create ItemInstance</button>
                 </form>

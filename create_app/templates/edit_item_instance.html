@@ -23,6 +23,10 @@
                 {% endfor %}
             </select>
         </div>
+        <div class="mb-3">
+            <label for="expireon" class="form-label">Expire On</label>
+            <input type="datetime-local" class="form-control" id="expireon" name="expireon" value="{{ instance.expireon|date:'Y-m-d\TH:i' }}" required>
+        </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>

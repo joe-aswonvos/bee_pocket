@@ -14,19 +14,27 @@
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createBeePocketModal">Create New BeePocket</button>
     </div>
 
-    <!-- Bootstrap cards for existing permissions and BeePockets -->
+    <!-- Scrollable Bootstrap cards for existing permissions and BeePockets -->
     <div class="row">
         <!-- Permissions Card -->
         <div class="col-md-6">
-            <div class="card mb-3">
+            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Permissions
                 </div>
                 <div class="card-body">
                     {% for permission in permissions %}
-                        <h5 class="card-title">{{ permission.user.username }}</h5>
-                        <p class="card-text">Permission: {{ permission.permission }}</p>
-                        <p class="card-text">BeePocket: {{ permission.beepocket.beepocket_name }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h5 class="card-title">{{ permission.user.username }}</h5>
+                                <p class="card-text">Permission: {{ permission.permission }}</p>
+                                <p class="card-text">BeePocket: {{ permission.beepocket.beepocket_name }}</p>
+                            </div>
+                            <div>
+                                <a href="{% url 'edit_permission' account.id permission.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{% url 'delete_permission' account.id permission.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
@@ -34,15 +42,23 @@
 
         <!-- BeePockets Card -->
         <div class="col-md-6">
-            <div class="card mb-3">
+            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     BeePockets
                 </div>
                 <div class="card-body">
                     {% for beepocket in beepockets %}
-                        <h5 class="card-title">{{ beepocket.beepocket_name }}</h5>
-                        <p class="card-text">Units: {{ beepocket.units }}</p>
-                        <p class="card-text">Starting Balance: {{ beepocket.starting_balance }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h5 class="card-title">{{ beepocket.beepocket_name }}</h5>
+                                <p class="card-text">Units: {{ beepocket.units }}</p>
+                                <p class="card-text">Starting Balance: {{ beepocket.starting_balance }}</p>
+                            </div>
+                            <div>
+                                <a href="{% url 'edit_beepocket' account.id beepocket.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{% url 'delete_beepocket' account.id beepocket.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
@@ -59,7 +75,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'create_permission' %}">
+                <form method="post" action="{% url 'create_permission' account.id %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="user" class="form-label">User</label>
@@ -100,7 +116,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'create_beepocket' %}">
+                <form method="post" action="{% url 'create_beepocket' account.id %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="beepocket_name" class="form-label">BeePocket Name</label>

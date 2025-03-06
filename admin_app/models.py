@@ -95,7 +95,7 @@ class BeePocket(models.Model):
         ('EUR', 'EUR'),
         ('USD', 'USD')
     )
-    beepocket_name = models.CharField(max_length=50)
+    beepocket_name = models.CharField(max_length=50, blank=False, null=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     units = models.CharField(max_length=20, choices=UNIT_CHOICES)
@@ -103,7 +103,7 @@ class BeePocket(models.Model):
 
     def __str__(self):
         return self.beepocket_name
-    
+
 class UserPermission(models.Model):
     """
     This is the UserPermission model. It is managed by a super-user.
