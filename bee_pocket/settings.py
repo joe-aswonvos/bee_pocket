@@ -30,9 +30,9 @@ if os.path.exists(os.path.join(BASE_DIR, 'env.py')):
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapp.com','127.0.0.1']
 
 SITE_ID = 1
 
