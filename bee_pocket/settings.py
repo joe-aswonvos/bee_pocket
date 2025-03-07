@@ -156,27 +156,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# Static files settings
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Simplified static file serving
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# For social auth providers
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': config('GOOGLE_CLIENT_ID'),
-            'secret': config('GOOGLE_SECRET_KEY'),
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID', config('GOOGLE_CLIENT_ID', default='')),
+            'secret': os.environ.get('GOOGLE_SECRET_KEY', config('GOOGLE_SECRET_KEY', default='')),
             'key': ''
         }
     },
     'github': {
         'APP': {
-            'client_id': config('GITHUB_CLIENT_ID'),
-            'secret': config('GITHUB_SECRET_KEY'),
+            'client_id': os.environ.get('GITHUB_CLIENT_ID', config('GITHUB_CLIENT_ID', default='')),
+            'secret': os.environ.get('GITHUB_SECRET_KEY', config('GITHUB_SECRET_KEY', default='')),
             'key': ''
         }
     },
