@@ -16,7 +16,7 @@
                 <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#createPermissionModal">Create New Permission</button>
             </div>
             
-            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Permissions
                 </div>
@@ -29,8 +29,12 @@
                                 <p class="card-text">BeePocket: {{ permission.beepocket.beepocket_name }}</p>
                             </div>
                             <div>
-                                <a href="{% url 'edit_permission' account.id permission.id %}" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="{% url 'delete_permission' account.id permission.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{% url 'edit_permission' account.id permission.id %}" class="btn btn-warning btn-sm" title="Edit">
+                                    <span class="material-icons">edit</span>
+                                </a>
+                                <a href="{% url 'delete_permission' account.id permission.id %}" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="material-icons">delete</span>
+                                </a>
                             </div>
                         </div>
                     {% endfor %}
@@ -45,7 +49,7 @@
                 <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createBeePocketModal">Create New BeePocket</button>
             </div>
             
-            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     BeePockets
                 </div>
@@ -58,8 +62,12 @@
                                 <p class="card-text">Starting Balance: {{ beepocket.starting_balance }}</p>
                             </div>
                             <div>
-                                <a href="{% url 'edit_beepocket' account.id beepocket.id %}" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="{% url 'delete_beepocket' account.id beepocket.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{% url 'edit_beepocket' account.id beepocket.id %}" class="btn btn-warning btn-sm" title="Edit">
+                                    <span class="material-icons">edit</span>
+                                </a>
+                                <a href="{% url 'delete_beepocket' account.id beepocket.id %}" class="btn btn-danger btn-sm" title="Delete">
+                                    <span class="material-icons">delete</span>
+                                </a>
                             </div>
                         </div>
                     {% endfor %}
@@ -144,4 +152,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

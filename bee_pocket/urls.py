@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from pocket_app.views import index_page
+from landing.views import landing_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,5 @@ urlpatterns = [
     path('create/', include('create_app.urls')),
     path('myaccount/<int:account_id>/', include('admin_app.urls')),
     path('accounts/', include('allauth.urls')),
-    path('', index_page, name='home'),
+    path('', landing_page, name='landing'),
 ]

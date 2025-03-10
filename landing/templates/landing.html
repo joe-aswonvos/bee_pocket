@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <!-- Content for logged-in users -->
+    <div class="jumbotron">
+        <h1>Welcome to Your Bee Pocket</h1>
+        <p>This is where some how-to content is going to appear</p>
+    </div>
+  {% else %}
+    <!-- Marketing content, login/signup buttons -->
+    <div class="jumbotron">
+      <h1>Welcome to Bee Pocket</h1>
+      <p>The easy way for your family to manage pocket money, tasks, behaviours and rewards</p>
+      <a href="{% url 'account_login' %}" class="btn btn-primary">Login</a>
+      <a href="{% url 'account_signup' %}" class="btn btn-success">Sign Up</a>
+    </div>
+  {% endif %}
+{% endblock %}

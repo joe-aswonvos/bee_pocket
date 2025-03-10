@@ -20,9 +20,11 @@
         <!-- Items Column -->
         <div class="col-md-6">
             <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-primary w-100 me-2" data-bs-toggle="modal" data-bs-target="#createItemModal">Create New Item</button>
+                <button class="btn btn-primary w-100 me-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
+                    <span class="material-icons me-2">add_circle</span> Create New Item
+                  </button>            
             </div>
-            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Items
                 </div>
@@ -37,8 +39,12 @@
                                 <p class="card-text">Value: {{ item.item_value }}</p>
                             </div>
                             <div>
-                                <a href="{% url 'edit_item' item.id %}" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{% url 'edit_item' item.id %}" class="btn btn-warning btn-sm" title="Edit Item">
+                                    <span class="material-icons">edit</span>
+                                </a>
+                                <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm" title="Delete Item">
+                                    <span class="material-icons">delete</span>
+                                </a>
                             </div>
                         </div>
                     {% endfor %}
@@ -49,9 +55,11 @@
         <!-- Item Instances Column -->
         <div class="col-md-6">
             <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-success w-100 ms-2" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">Create New ItemInstance</button>
+                <button class="btn btn-success w-100 ms-2" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">
+                    <span class="material-icons me-2">add_circle</span> Create New Item Instance
+                </button>
             </div>
-            <div class="card mb-3" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Item Instances
                 </div>
@@ -152,47 +160,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the default selected BeePocket ID
-        const defaultBeepocketSelect = document.getElementById('beepocket_select');
-        if (defaultBeepocketSelect.value) {
-            showItemInstances(defaultBeepocketSelect.value);
-        }
-    });
-    
-    function showItemInstances(beepocketId) {
-        if (!beepocketId) return;
-        
-        // Fetch and display item instances for the selected BeePocket
-        fetch(`/create/item_instances/${beepocketId}/`)
-            .then(response => response.json())
-            .then(data => {
-                const itemInstancesDiv = document.getElementById('item_instances');
-                itemInstancesDiv.innerHTML = '';
-                data.item_instances.forEach(instance => {
-                    const card = document.createElement('div');
-                    card.className = 'col-md-12';
-                    card.innerHTML = `
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                ${instance.item_name}
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Created By: ${instance.created_by}</p>
-                                <p class="card-text">Created On: ${instance.created_on}</p>
-                                <p class="card-text">Active Status: ${instance.active_status}</p>
-                                <p class="card-text">Approved: ${instance.approved}</p>
-                                <a href="/create/approve_item_instance/${instance.id}/" class="btn btn-success">Approve</a>
-                                <a href="/create/edit_item_instance/${instance.id}/" class="btn btn-warning">Edit</a>
-                                <a href="/create/delete_item_instance/${instance.id}/" class="btn btn-danger">Delete</a>
-                            </div>
-                        </div>
-                    `;
-                    itemInstancesDiv.appendChild(card);
-                });
-            });
-    }
-    </script>
 {% endblock %}

@@ -16,6 +16,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body class="pb-5">
     <header class="text-center">
@@ -32,7 +33,7 @@
      alt="Bee Pocket" 
      width="60" height="60" 
      class="d-inline-block d-md-none align-items-center" />
-          <a class="navbar-brand" href="#">Bee Pocket</a>
+          <a class="navbar-brand" href="{% url 'landing' %}">Bee Pocket</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -95,5 +96,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'admin_app',
+    'landing',
     'create_app',
     'pocket_app.apps.PocketAppConfig',
 ]
