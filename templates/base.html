@@ -15,19 +15,29 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
-  <body>
-    <header class="bg-primary text-white text-center py-3">
-      <h1>Bee Pocket</h1>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <body class="pb-5">
+    <header class="text-center">
+      <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
+<!-- Desktop version -->
+<img src="{% static 'images/BeeIcon.webp' %}" 
+     alt="Bee Pocket" 
+     width="120" height="120" 
+     class="d-none d-md-inline-block align-items-center" />
+
+<!-- Mobile version -->
+<img src="{% static 'images/BeeIcon.webp' %}" 
+     alt="Bee Pocket" 
+     width="60" height="60" 
+     class="d-inline-block d-md-none align-items-center" />
           <a class="navbar-brand" href="#">Bee Pocket</a>
           <button
             class="navbar-toggler"
             type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
             aria-controls="navbarNav"
             aria-expanded="false"
             aria-label="Toggle navigation"
@@ -35,12 +45,12 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ms-auto"> 
               {% if user.is_authenticated %}
                 {% is_account_owner user as is_owner %}
                 {% if is_owner and account_id %}
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'manage_account' account_id %}">MyAccount</a>
+                    <a class="nav-link" href="{% url 'manage_account' account_id %}">My Account</a>
                   </li>
                 {% endif %}
                 {% for permission in user.userpermission_set.all|unique_manager_permission %}
@@ -50,7 +60,7 @@
                     </li>
                   {% elif permission.permission == 'user' %}
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'userpage' %}">MyPockets</a>
+                      <a class="nav-link" href="{% url 'userpage' %}">My Pockets</a>
                     </li>
                   {% endif %}
                 {% endfor %}
@@ -70,9 +80,14 @@
         </div>
       </nav>
     </header>
-    <main class="container my-4">{% block content %} {% endblock %}</main>
 
-    <footer class="bg-light text-center py-3">
+    <main class="container my-4 flex-grow-1">
+      <div class="content-container">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="fixed-bottom text-center py-3">
       <p>&copy; 2025 Bee Pocket</p>
     </footer>
     <script

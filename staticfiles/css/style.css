@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --primary-font: 'DynaPuff', cursive;
+    --secondary-font: 'Roboto', sans-serif;
+    --primary-color: #f4be25;
+    --secondary-color: #616161;
+    --tertiary-color: #bfbfc1;
+    --contrast-color: #eeeeee;
+}
+
+
+/* Global Styles */
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--primary-font);
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+body{
+    font-family: var(--secondary-font);
+    color: var(--secondary-color);
+    background-color: var(--tertiary-color);
+}
