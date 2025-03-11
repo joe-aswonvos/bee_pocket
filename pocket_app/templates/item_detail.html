@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ item.item.item_name }} - Details{% endblock %}
+
+{% block content %}
+<div class="content-container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <!-- Back button -->
+      <div class="mb-3">
+        <a href="{% url 'userpage' %}{% if request.GET.beepocket_id %}?beepocket_id={{ request.GET.beepocket_id }}{% endif %}" class="btn btn-outline-secondary">
+          <span class="material-icons me-1">arrow_back</span>
+          Back to Dashboard
+        </a>
+      </div>
+      
+      <!-- Item details card -->
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h2 class="m-0">
+            {% if item.item.item_type == 'Task' %}
+            <span class="material-icons me-2 align-middle" style="color: #f4be25;">local_florist</span>
+            {% elif item.item.item_type == 'Consequence' %}
+            <span class="material-icons me-2 align-middle" style="color: #dc3545;">block</span>
+            {% elif item.item.item_type == 'Reward' %}
+            <span class="material-icons me-2 align-middle" style="color: #f4be25;">emoji_events</span>
+            {% endif %}
+            {{ item.item.item_name }}
+          </h2>
+          <span class="badge {% if item.item.item_type == 'Task' %}bg-success{% elif item.item.item_type == 'Consequence' %}bg-danger{% else %}bg-warning text-dark{% endif %} fs-5">
+            {% if item.item.item_type == 'Task' %}+{% else %}-{% endif %}{{ item.item.item_value }}
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <h5>Details</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Type:</span>
+                  <span>{{ item.item.item_type }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Date Created:</span>
+                  <span>{{ item.CreatedOn|date:"F j, Y" }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Date Approved:</span>
+                  <span>{{ item.ApprovedOn|date:"F j, Y" }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Status:</span>
+                  <span>
+                    {% if item.active_status %}
+                    <span class="badge bg-success">Active</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Inactive</span>
+                    {% endif %}
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>BeePocket:</span>
+                  <span>{{ item.beepocket.beepocket_name }}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5>Description</h5>
+              <div class="p-3 bg-light rounded">
+                {% if item.item.description %}
+                <p class="mb-0">{{ item.item.description }}</p>
+                {% else %}
+                <p class="text-muted mb-0">No description available.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          
+          {% if item.photo %}
+          <div class="text-center mb-3">
+            <img src="{{ item.photo.url }}" alt="Item Photo" class="img-fluid rounded" style="max-height: 300px;">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- Comments section -->
+      <div class="card">
+        <div class="card-header">
+          <h4 class="m-0">
+            <span class="material-icons me-2 align-middle">comment</span>
+            Comments
+          </h4>
+        </div>
+        <div class="card-body">
+          <!-- Comment form -->
+          <form method="post" class="mb-4">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="comment_text" class="form-label">Add a comment</label>
+              <div class="input-group">
+                <textarea name="comment_text" id="comment_text" class="form-control" rows="2" placeholder="Write your comment here..." required></textarea>
+                <button type="submit" class="btn btn-primary">
+                  <span class="material-icons">send</span>
+                </button>
+              </div>
+            </div>
+          </form>
+          
+          <!-- Comments list -->
+          <div class="comments-list">
+            {% if comments %}
+              {% for comment in comments %}
+                <div class="card mb-3">
+                  <div class="card-body p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong class="text-primary">{{ comment.CreatedBy.username }}</strong>
+                      <small class="text-muted">{{ comment.CreatedOn|date:"M d, Y g:i a" }}</small>
+                    </div>
+                    <p class="mb-0">{{ comment.Comment }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="text-center py-4">
+                <span class="material-icons" style="font-size: 48px; color: #ccc;">chat_bubble_outline</span>
+                <p class="mt-2">No comments yet. Be the first to comment!</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.comments-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+</style>
+{% endblock %}

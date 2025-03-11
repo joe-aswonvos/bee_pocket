@@ -13,6 +13,10 @@ def unique_manager_permission(permissions):
             seen.add(permission.permission)
     return unique_permissions
 
+@register.filter
+def toggle_boolean(value):
+    return not value
+
 @register.simple_tag
 def is_account_owner(user):
     try:

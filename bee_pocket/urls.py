@@ -26,4 +26,5 @@ urlpatterns = [
     path('myaccount/<int:account_id>/', include('admin_app.urls')),
     path('accounts/', include('allauth.urls')),
     path('', landing_page, name='landing'),
+    path('pocket/', include('pocket_app.urls')),
 ]

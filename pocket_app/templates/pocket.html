@@ -1,11 +1,212 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
 
-{% block title %}User Page{% endblock %}
+{% block title %}My Dashboard{% endblock %}
 
 {% block content %}
+<div class="content-container">
+  <!-- BeePocket Selection and Balance Section -->
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="m-0">Select BeePocket</h4>
+        </div>
+        <div class="card-body">
+          <select id="beepocket-selector" class="form-select" onchange="location.href='?beepocket_id='+this.value">
+            {% for beepocket in beepockets %}
+              <option value="{{ beepocket.id }}" {% if selected_beepocket and selected_beepocket.id == beepocket.id %}selected{% endif %}>
+                {{ beepocket.beepocket_name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="m-0">Current Balance</h4>
+        </div>
+        <div class="card-body">
+          <div class="display-4 text-center">
+            {% if selected_beepocket %}
+              {% if selected_beepocket.units != 'non-currency' %}
+                <span class="currency-symbol">
+                  {% if selected_beepocket.units == 'GBP' %}£{% endif %}
+                  {% if selected_beepocket.units == 'EUR' %}€{% endif %}
+                  {% if selected_beepocket.units == 'USD' %}${% endif %}
+                </span>
+              {% endif %}
+              <span id="balance-amount">{{ balance }}</span>
+            {% else %}
+              <span class="text-muted">No BeePocket selected</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toggle Button for Approved/Not Approved Items -->
+  <div class="row mb-4">
+    <div class="col text-center">
+      <a href="?beepocket_id={{ selected_beepocket.id }}&show_approved={{ show_approved|toggle_boolean }}" class="btn btn-secondary">
+        {% if show_approved %}
+          Show Not Approved
+        {% else %}
+          Show Approved
+        {% endif %}
+      </a>
+    </div>
+  </div>
+  
+  <!-- Main Content: Three Columns -->
+  <div class="row">
+    <!-- Pollen (Tasks) Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h4 class="m-0">
+            <span class="material-icons me-2 align-middle" style="color: #f4be25;">local_florist</span>
+            Pollen (Tasks)
+          </h4>
+        </div>
+        <div class="card-body" id="pollen-container" style="max-height: 500px; overflow-y: auto;">
+          {% if pollen_items %}
+            {% for item in pollen_items %}
+              <div class="card item-card mb-3" ondblclick="window.location.href='{% url 'item_detail' item.id %}'">
+                <div class="card-body p-3">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title mb-1">{{ item.item.item_name }}</h5>
+                    <span class="badge bg-success">+{{ item.item.item_value }}</span>
+                  </div>
+                  <p class="card-text text-muted small mb-0">{{ item.created_on|date:"M d, Y" }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-center py-4">
+              <span class="material-icons" style="font-size: 48px; color: #ccc;">local_florist</span>
+              <p class="mt-2">No tasks available</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sting (Consequences) Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h4 class="m-0">
+            <span class="material-icons me-2 align-middle" style="color: #dc3545;">block</span>
+            Sting (Consequences)
+          </h4>
+        </div>
+        <div class="card-body" id="sting-container" style="max-height: 500px; overflow-y: auto;">
+          {% if sting_items %}
+            {% for item in sting_items %}
+              <div class="card item-card mb-3" ondblclick="window.location.href='{% url 'item_detail' item.id %}'">
+                <div class="card-body p-3">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title mb-1">{{ item.item.item_name }}</h5>
+                    <span class="badge bg-danger">-{{ item.item.item_value }}</span>
+                  </div>
+                  <p class="card-text text-muted small mb-0">{{ item.created_on|date:"M d, Y" }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-center py-4">
+              <span class="material-icons" style="font-size: 48px; color: #ccc;">block</span>
+              <p class="mt-2">No consequences available</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Honey (Rewards) Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h4 class="m-0">
+            <span class="material-icons me-2 align-middle" style="color: #f4be25;">emoji_events</span>
+            Honey (Rewards)
+          </h4>
+        </div>
+        <div class="card-body" id="honey-container" style="max-height: 500px; overflow-y: auto;">
+          {% if honey_items %}
+            {% for item in honey_items %}
+              <div class="card item-card mb-3" ondblclick="window.location.href='{% url 'item_detail' item.id %}'">
+                <div class="card-body p-3">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title mb-1">{{ item.item.item_name }}</h5>
+                    <span class="badge bg-warning text-dark">-{{ item.item.item_value }}</span>
+                  </div>
+                  <p class="card-text text-muted small mb-0">{{ item.created_on|date:"M d, Y" }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-center py-4">
+              <span class="material-icons" style="font-size: 48px; color: #ccc;">emoji_events</span>
+              <p class="mt-2">No rewards available</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h2>User Page</h2>
-<p>Hello, world. You're at the index page for the individual bee_pocket.</p>
+<style>
+.item-card {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
 
+.item-card:hover {
+  transform: translateX(5px);
+  border-left-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.card-header .material-icons {
+  vertical-align: text-bottom;
+}
+
+.display-4 {
+  font-family: var(--primary-font);
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.currency-symbol {
+  font-size: 0.8em;
+  position: relative;
+  top: -0.1em;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Enhance double-click behavior
+  const itemCards = document.querySelectorAll('.item-card');
+  itemCards.forEach(card => {
+    card.addEventListener('click', function() {
+      // Add a visual indication that the card was clicked
+      this.style.backgroundColor = 'rgba(var(--primary-color-rgb), 0.1)';
+      setTimeout(() => {
+        this.style.backgroundColor = '';
+      }, 200);
+    });
+  });
+});
+</script>
 {% endblock %}

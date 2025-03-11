@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         - A user icon/avatar saved to cloudinary and with a link saved in the database
     """
     username = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
+    email = models.EmailField(max_length=50, unique=True)
     user_icon = models.URLField(max_length=200, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

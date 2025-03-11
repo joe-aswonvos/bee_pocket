@@ -47,18 +47,24 @@ LOGOUT_REDIRECT_URL = "/"
 # Application definition
 
 INSTALLED_APPS = [
+    # Django built-in apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # Add this as allauth requires it
+    
+    # Third-party apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
-    'admin_app',
+    
+    # Local apps - ordered by dependency
+    'admin_app',  # First because it contains the User model
     'landing',
     'create_app',
     'pocket_app.apps.PocketAppConfig',
@@ -81,7 +87,10 @@ ROOT_URLCONF = 'bee_pocket.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'landing/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
