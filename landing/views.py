@@ -17,4 +17,4 @@ def landing_page(request):
         except Account.DoesNotExist:
             pass
     # Show landing page for unauthenticated users
-    return render(request, 'landing/landing.html')
+    return render(request, 'landing.html')

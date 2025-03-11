@@ -1,5 +1,139 @@
-{% extends "base.html" %} {% block title %}Email{% endblock %} {% block content
-%}
-<h2>Email</h2>
-<p>This is the email template.</p>
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Email Addresses" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="my-2">
+            <span class="material-icons me-2 align-middle">email</span>
+            {% trans "Email Addresses" %}
+          </h2>
+        </div>
+        <div class="card-body">
+          {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <div class="d-flex align-items-center">
+                <span class="material-icons me-2">{% if message.tags == 'success' %}check_circle{% else %}info{% endif %}</span>
+                <div>{{ message }}</div>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          <p class="lead">{% trans 'The following email addresses are associated with your account:' %}</p>
+          
+          <form action="{% url 'account_email' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="list-group mb-4">
+              {% for emailaddress in user.emailaddress_set.all %}
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                  <input id="email_radio_{{ forloop.counter }}" type="radio" name="email" 
+                         {% if emailaddress.primary %}checked="checked"{% endif %} 
+                         value="{{ emailaddress.email }}" class="form-check-input">
+                  <label for="email_radio_{{ forloop.counter }}" class="form-check-label {% if emailaddress.primary %}fw-bold{% endif %}">
+                    {{ emailaddress.email }}
+                  </label>
+                  
+                  <div class="mt-1">
+                    {% if emailaddress.verified %}
+                    <span class="badge bg-success">
+                      <span class="material-icons" style="font-size: 12px;">check_circle</span>
+                      {% trans "Verified" %}
+                    </span>
+                    {% else %}
+                    <span class="badge bg-warning text-dark">
+                      <span class="material-icons" style="font-size: 12px;">pending</span>
+                      {% trans "Unverified" %}
+                    </span>
+                    {% endif %}
+                    
+                    {% if emailaddress.primary %}
+                    <span class="badge bg-primary">
+                      <span class="material-icons" style="font-size: 12px;">star</span>
+                      {% trans "Primary" %}
+                    </span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              <button class="btn btn-outline-primary" type="submit" name="action_primary">
+                <span class="material-icons me-1">push_pin</span>
+                {% trans 'Make Primary' %}
+              </button>
+              <button class="btn btn-outline-secondary" type="submit" name="action_send">
+                <span class="material-icons me-1">send</span>
+                {% trans 'Re-send Verification' %}
+              </button>
+              <button class="btn btn-outline-danger" type="submit" name="action_remove">
+                <span class="material-icons me-1">delete</span>
+                {% trans 'Remove' %}
+              </button>
+            </div>
+          </form>
+          
+          <hr>
+          
+          <h3 class="mt-4 mb-3">{% trans "Add Email Address" %}</h3>
+          <form method="post" action="{% url 'account_email' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">{% trans "Email Address" %}:</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <span class="material-icons">mail_outline</span>
+                </span>
+                <input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" required>
+              </div>
+            </div>
+            
+            <button class="btn btn-primary" name="action_add" type="submit">
+              <span class="material-icons me-1">add_circle</span>
+              {% trans "Add Email" %}
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <a href="{% url 'account_change_password' %}" class="btn btn-outline-secondary">
+          <span class="material-icons me-1">password</span>
+          {% trans "Change Password" %}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block extra_body %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    (function() {
+      var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+      var actions = document.getElementsByName('action_remove');
+      if (actions.length) {
+        actions[0].addEventListener("click", function(e) {
+          if (!confirm(message)) {
+            e.preventDefault();
+          }
+        });
+      }
+    })();
+  });
+</script>
+{% endblock %}
 {% endblock %}

@@ -1,8 +1,131 @@
-{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
-content %}
-<h2>Sign Up</h2>
-<form method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Sign Up</button>
-</form>
+{% extends "base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="my-2">
+            <span class="material-icons me-2 align-middle">person_add</span>
+            {% trans "Sign Up" %}
+          </h2>
+        </div>
+        <div class="card-body">
+          {% if form.errors %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="d-flex align-items-center">
+              <span class="material-icons me-2">error_outline</span>
+              <div>Please correct the errors below.</div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+          
+          {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <div class="d-flex align-items-center">
+                <span class="material-icons me-2">info</span>
+                <div>{{ message }}</div>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <p class="mb-4">{% blocktrans %}Already have an account? <a href="{{ login_url }}" class="text-decoration-none">Sign in</a> instead.{% endblocktrans %}</p>
+
+          <form class="signup" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="id_email" class="form-label">{% trans "Email" %}</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <span class="material-icons">email</span>
+                </span>
+                <input type="email" name="email" id="id_email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" placeholder="name@example.com" autocomplete="email" required>
+                {% if form.email.errors %}
+                <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="id_username" class="form-label">{% trans "Username" %}</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <span class="material-icons">person</span>
+                </span>
+                <input type="text" name="username" id="id_username" class="form-control {% if form.username.errors %}is-invalid{% endif %}" placeholder="username" autocomplete="username" required>
+                {% if form.username.errors %}
+                <div class="invalid-feedback">{{ form.username.errors.0 }}</div>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="id_password1" class="form-label">{% trans "Password" %}</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <span class="material-icons">lock</span>
+                </span>
+                <input type="password" name="password1" id="id_password1" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" placeholder="••••••••" required>
+                {% if form.password1.errors %}
+                <div class="invalid-feedback">{{ form.password1.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="form-text">{% trans "Create a strong password with at least 8 characters, including letters and numbers." %}</div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="id_password2" class="form-label">{% trans "Confirm Password" %}</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <span class="material-icons">lock_clock</span>
+                </span>
+                <input type="password" name="password2" id="id_password2" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" placeholder="••••••••" required>
+                {% if form.password2.errors %}
+                <div class="invalid-feedback">{{ form.password2.errors.0 }}</div>
+                {% endif %}
+              </div>
+            </div>
+            
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary">
+                <span class="material-icons me-2">how_to_reg</span>
+                {% trans "Sign Up" %}
+              </button>
+            </div>
+          </form>
+          
+          {% get_providers as socialaccount_providers %}
+          {% if socialaccount_providers %}
+          <div class="mt-4">
+            <p class="text-center">{% trans "Or sign up with:" %}</p>
+            <div class="d-flex justify-content-center gap-2">
+              {% for provider in socialaccount_providers %}
+              <a href="{% provider_login_url provider.id process='login' %}" class="btn btn-outline-dark">
+                <span class="material-icons">{{ provider.name|lower }}</span>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign Out" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="my-2">
+            <span class="material-icons me-2 align-middle">logout</span>
+            {% trans "Sign Out" %}
+          </h2>
+        </div>
+        <div class="card-body text-center">
+          <div class="mb-4">
+            <span class="material-icons" style="font-size: 64px; color: var(--primary-color);">waving_hand</span>
+          </div>
+          
+          <p class="lead">{% trans "Are you sure you want to sign out?" %}</p>
+          
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            
+            <div class="d-flex justify-content-center gap-3 mt-4">
+              <a href="{% url 'landing' %}" class="btn btn-outline-secondary">
+                <span class="material-icons me-2">arrow_back</span>
+                {% trans "Cancel" %}
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <span class="material-icons me-2">logout</span>
+                {% trans "Sign Out" %}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,11 +1,47 @@
 {% extends "base.html" %}
 
-{% block title %}Email Confirmation{% endblock %} 
+{% block title %}Email Confirmation{% endblock %}
 
 {% block content %}
-<h2>Email Confirmation</h2>
-<p>
-  Please confirm your email address by clicking the link in the email we sent
-  you.
-</p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2 class="my-2">
+            <span class="material-icons me-2 align-middle">mark_email_unread</span>
+            Email Confirmation
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <span class="material-icons" style="font-size: 64px; color: var(--primary-color);">email</span>
+          </div>
+          
+          <p class="lead text-center">Please confirm your email address to complete your registration.</p>
+          
+          <div class="alert alert-info" role="alert">
+            <div class="d-flex align-items-center">
+              <span class="material-icons me-2">info</span>
+              <div>
+                <strong>Check your inbox</strong>: We've sent a confirmation link to your email address.
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4">
+            <p>Haven't received the email? Please check your spam folder or request a new confirmation email.</p>
+            
+            <div class="d-flex justify-content-center mt-4">
+              <a href="{% url 'account_email' %}" class="btn btn-outline-primary">
+                <span class="material-icons me-2">refresh</span>
+                Resend Confirmation Email
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
