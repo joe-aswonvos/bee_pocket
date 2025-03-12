@@ -208,7 +208,7 @@
  }
  
  /* Semi-transparent card bodies */
- .card-body {
+ .card-body  {
    background-color: rgba(var(--contrast-color-rgb), 0.6);
    padding: 15px;
    position: relative;
@@ -253,7 +253,7 @@
  }
  
  /* Hover effect for card items */
- .card-body .d-flex:hover {
+ .card-body .d-flex:hover{
    background-color: rgba(var(--primary-color-rgb), 0.1);
    transform: translateX(3px);
    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
@@ -271,6 +271,45 @@
    margin-bottom: 4px;
    font-size: 0.9rem;
  }
+
+ /* MyPockets Card styling */
+
+ .item-card .description {
+  display: none;
+}
+
+.item-card:hover .description {
+  display: block;
+}
+
+.item-card {
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+
+.item-card:hover {
+  transform: translateX(5px);
+  border-left-color: var(--primary-color);
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header .material-icons {
+  vertical-align: text-bottom;
+}
+
+.display-4 {
+  font-family: var(--primary-font);
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.currency-symbol {
+  font-size: 0.8em;
+  position: relative;
+  top: -0.1em;
+}
  
  /* ====================================
   * 8. MODAL COMPONENTS

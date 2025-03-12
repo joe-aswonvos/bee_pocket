@@ -4,9 +4,9 @@
 {% block title %}{{ item.item.item_name }} - Details{% endblock %}
 
 {% block content %}
-<div class="content-container py-4">
+<div class="container py-4">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
+    <div class="col-12">
       <!-- Back button -->
       <div class="mb-3">
         <a href="{% url 'userpage' %}{% if request.GET.beepocket_id %}?beepocket_id={{ request.GET.beepocket_id }}{% endif %}" class="btn btn-outline-secondary">
