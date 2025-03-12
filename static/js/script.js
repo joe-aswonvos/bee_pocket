@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   // Ensure modals have proper z-index when opened
   const modalElements = document.querySelectorAll(".modal");
   modalElements.forEach((modal) => {
     modal.addEventListener("show.bs.modal", function () {
       // Set modal to higher z-index immediately
-      modal.style.zIndex = "20";
+      modal.style.zIndex = "1050";
 
       setTimeout(() => {
         // Configure backdrop properly
@@ -17,14 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const modalDialog = modal.querySelector(".modal-dialog");
         if (modalDialog) {
           modalDialog.style.pointerEvents = "auto";
-          modalDialog.style.zIndex = "1050";
+          modalDialog.style.zIndex = "1060";
         }
 
         const modalContent = modal.querySelector(".modal-content");
         if (modalContent) {
           modalContent.style.pointerEvents = "auto";
           modalContent.style.opacity = "1";
-          modalContent.style.zIndex = "1051";
+          modalContent.style.zIndex = "1060";
         }
 
         // Ensure all form elements within the modal are interactive
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
           el.style.pointerEvents = "auto";
           el.style.opacity = "1";
         });
-      }, 10);
+      }, 0);
     });
   });
 

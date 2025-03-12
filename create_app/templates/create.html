@@ -1,30 +1,25 @@
 {% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
 
 {% block title %}Create Item{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container flex-grow-1 d-flex flex-column">
     <h2 class="text-center my-4">Create Item</h2>
 
-    <div class="mb-3">
-        <label for="beepocket_select" class="form-label">Select BeePocket</label>
-        <select class="form-select" id="beepocket_select" name="beepocket_select" onchange="showItemInstances(this.value)">
-            <option value="">Select BeePocket</option>
-            {% for beepocket in beepockets %}
-                <option value="{{ beepocket.id }}" {% if default_beepocket and default_beepocket.id == beepocket.id %}selected{% endif %}>{{ beepocket.beepocket_name }}</option>
-            {% endfor %}
-        </select>
-    </div>
+        <div class="row flex-grow-1">
 
-    <div class="row">
         <!-- Items Column -->
-        <div class="col-md-6">
-            <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-primary w-100 me-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
-                    <span class="material-icons me-2">add_circle</span> Create New Item
-                  </button>            
+
+        <div class="col-md-6 d-flex flex-column">
+            <div class="d-flex flex-column mb-3">
+                <h3 class="text-center my-4">Create an Item Template</h3>
+                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
+                    <span class="material-icons me-2">add_circle</span> Create New Template
+                </button>            
             </div>
-            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 flex-grow-1">
                 <div class="card-header">
                     Items
                 </div>
@@ -53,13 +48,27 @@
         </div>
 
         <!-- Item Instances Column -->
-        <div class="col-md-6">
-            <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-success w-100 ms-2" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">
-                    <span class="material-icons me-2">add_circle</span> Create New Item Instance
-                </button>
+        <div class="col-md-6 d-flex flex-column">
+            <div class="mb-3">
+                <h3 class="text-center my-4">Add an Item to a Pocket</h3>
+                <div class="row g-2 mb-2">
+                    <div class="col-12 col-lg-4">
+                        <label for="beepocket_select" class="form-label visually-hidden">Select BeePocket</label>
+                        <select class="form-select" id="beepocket_select" name="beepocket_select">
+                            <option value="">Select BeePocket</option>
+                            {% for beepocket in beepockets %}
+                            <option value="{{ beepocket.id }}" {% if default_beepocket and default_beepocket.id == beepocket.id %}selected{% endif %}>{{ beepocket.beepocket_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">
+                            <span class="material-icons me-2">add_circle</span> Create New Item
+                    </div>
+                </div>
             </div>
-            <div class="card mb-3 myscrollable" style="max-height: 400px; overflow-y: auto;">
+            
+            <div class="card mb-3 flex-grow-1" style="max-height: 400px; overflow-y: auto;">
                 <div class="card-header">
                     Item Instances
                 </div>
@@ -101,7 +110,9 @@
                             {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.category_name }}</option>
                             {% endfor %}
+                            <option value="new">Create New Category</option>
                         </select>
+                        <input type="text" class="form-control mt-2" id="new_category_name" name="new_category_name" placeholder="New Category Name" style="display: none;">
                     </div>
                     <div class="mb-3">
                         <label for="item_type" class="form-label">Item Type</label>
@@ -160,4 +171,41 @@
         </div>
     </div>
 </div>
+
+<!-- Inline Formset for Categories -->
+<div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCategoryModalLabel">Create New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create_item' %}">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                        <div class="mb-3">
+                            {{ form.category_name.label_tag }}
+                            {{ form.category_name }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Save Categories</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('item_category').addEventListener('change', function() {
+    var newCategoryInput = document.getElementById('new_category_name');
+    if (this.value === 'new') {
+        newCategoryInput.style.display = 'block';
+    } else {
+        newCategoryInput.style.display = 'none';
+    }
+});
+</script>
+
 {% endblock %}

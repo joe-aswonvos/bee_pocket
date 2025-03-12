@@ -36,10 +36,6 @@
             <label for="item_value" class="form-label">Item Value</label>
             <input type="number" class="form-control" id="item_value" name="item_value" value="{{ item.item_value }}" required>
         </div>
-        <div class="mb-3">
-            <label for="expireon" class="form-label">Expire On</label>
-            <input type="datetime-local" class="form-control" id="expireon" name="expireon" value="{{ item.expireon|date:'Y-m-d\TH:i' }}" required>
-        </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>

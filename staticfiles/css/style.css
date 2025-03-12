@@ -30,8 +30,8 @@
    --z-content: 1;
    --z-header: 10;
    --z-footer: 10;
-   --z-modal-backdrop: 1040;
-   --z-modal: 1050;
+   --z-modal-backdrop: -1;
+   --z-modal: 1060;
  }
  
  /* ====================================
@@ -59,7 +59,7 @@
    height: 100%;
    background-image: url("../images/background_img.webp");
    background-position: center;
-   background-attachment: fixed; /* Cross-browser issue: May not work on iOS */
+   background-attachment: fixed; 
    background-repeat: no-repeat;
    background-size: cover;
    z-index: var(--z-background);
@@ -88,13 +88,14 @@
   * 3. LAYOUT AND CONTAINERS
   * ==================================== */
  /* Main content container with backdrop blur */
+
  .content-container {
    background-color: rgba(var(--contrast-color-rgb), 0.6);
    border-radius: 8px;
    padding: 20px;
    margin: 20px auto;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   max-width: 90%;
+   max-width: 95%;
    backdrop-filter: blur(3px); /* Cross-browser issue: Not supported in Firefox without flag */
    -webkit-backdrop-filter: blur(3px); /* Vendor prefix for Safari support */
    border: 1px solid rgba(255, 255, 255, 0.2);
@@ -276,26 +277,25 @@
   * ==================================== */
  /* Fixed z-index for modals to appear above overlays */
  .modal-backdrop {
-   z-index: var(--z-modal-backdrop) !important;
-   pointer-events: none; /* Allows clicks to pass through */
+   z-index: var(--z-modal-backdrop);
+   pointer-events: none; 
  }
  
  .modal {
-   z-index: var(--z-modal) !important;
+   z-index: var(--z-modal);
  }
  
  .modal-dialog {
-   z-index: calc(var(--z-modal) + 1) !important;
-   pointer-events: auto !important;
+   z-index: var(--z-modal);
+   pointer-events: auto;
  }
  
  .modal-content {
-   z-index: calc(var(--z-modal) + 2) !important;
+   z-index: var(--z-modal);
    background-color: white;
    pointer-events: auto;
  }
  
- /* Ensure all modal children are interactive */
  .modal-content * {
    pointer-events: auto;
    opacity: 1;

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import timedelta
 from admin_app.models import *
 
 # Create your models here.
@@ -47,9 +49,9 @@ class Category(models.Model):
     """
     This is the Category model. It is a model for the category of an item.
     Each category has a uniqueID assigned by Django and the following attributes:
-        - Category name - Charfield (50 characters)
+        - Category name - Charfield (100 characters)
     """
-    category_name = models.CharField(max_length=50)
+    category_name = models.CharField(max_length=100, default='none')
 
     def __str__(self):
         return self.category_name
@@ -113,7 +115,7 @@ class ItemInstance(models.Model):
     Lasteditedon = models.DateTimeField(auto_now=True)
     CreatedBy = models.ForeignKey(User, on_delete=models.PROTECT, related_name='created_items')
     CreatedOn = models.DateTimeField(auto_now_add=True)
-    expireon = models.DateTimeField()
+    expireon = models.DateTimeField(default=(timezone.now() + timedelta(hours=24)))
     ActiveStatus = models.BooleanField(default=True)
     Approved = models.BooleanField(default=False)
     ApprovedBy = models.CharField(max_length=255, null=True, blank=True)

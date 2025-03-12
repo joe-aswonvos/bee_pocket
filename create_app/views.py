@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.forms import modelformset_factory
 from datetime import timedelta
 from admin_app.models import User, BeePocket, UserPermission, Account
+from pocket_app.forms import ItemForm, CategoryFormSet
 from pocket_app.models import Item, Category, ItemInstance
 
 @login_required
@@ -31,13 +33,27 @@ def create_item(request):
     items = Item.objects.filter(createdby=user)
     categories = Category.objects.all()
 
+    CategoryFormSet = modelformset_factory(Category, fields=('category_name',), extra=1)
+    formset = CategoryFormSet(queryset=Category.objects.none())
+
     if request.method == 'POST':
         item_name = request.POST['item_name']
         item_description = request.POST['item_description']
         item_category_id = request.POST['item_category']
         item_type = request.POST['item_type']
         item_value = request.POST['item_value']
-        item_category = get_object_or_404(Category, id=item_category_id)
+        
+        formset = CategoryFormSet(request.POST)
+        
+        if formset.is_valid():
+            formset.save()
+        
+        if item_category_id == 'new':
+            new_category_name = request.POST['new_category_name']
+            item_category, created = Category.objects.get_or_create(category_name=new_category_name)
+        else:
+            item_category = get_object_or_404(Category, id=item_category_id)
+            
         Item.objects.create(
             item_name=item_name,
             item_description=item_description,
@@ -54,6 +70,7 @@ def create_item(request):
         'beepockets': beepockets,
         'default_beepocket': default_beepocket,
         'account_id': account_id,
+        'formset': formset,
     }
     return render(request, 'create.html', context)
 
