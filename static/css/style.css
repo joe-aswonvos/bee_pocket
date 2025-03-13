@@ -30,7 +30,7 @@
    --z-content: 1;
    --z-header: 10;
    --z-footer: 10;
-   --z-modal-backdrop: -1;
+   --z-modal-backdrop: 11;
    --z-modal: 1060;
  }
  
@@ -220,6 +220,11 @@
    max-height: inherit;
    flex: 1;
  }
+
+ .scrolling {
+  max-height: 400px;
+  overflow-y: auto;
+ }
  
  /* Custom scrollable area background */
  .myscrollable {
@@ -310,6 +315,13 @@
   position: relative;
   top: -0.1em;
 }
+
+.btn.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
  
  /* ====================================
   * 8. MODAL COMPONENTS
@@ -320,24 +332,9 @@
    pointer-events: none; 
  }
  
- .modal {
-   z-index: var(--z-modal);
- }
- 
- .modal-dialog {
+ .modal-dialog, .modal-content, .modal-header, .modal-body, .modal-footer, .modal {
    z-index: var(--z-modal);
    pointer-events: auto;
- }
- 
- .modal-content {
-   z-index: var(--z-modal);
-   background-color: white;
-   pointer-events: auto;
- }
- 
- .modal-content * {
-   pointer-events: auto;
-   opacity: 1;
  }
  
  /* ====================================

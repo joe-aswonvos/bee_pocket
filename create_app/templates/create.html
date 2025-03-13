@@ -5,8 +5,8 @@
 {% block title %}Create Item{% endblock %}
 
 {% block content %}
-<div class="container flex-grow-1 d-flex flex-column">
-    <h2 class="text-center my-4">Create Item</h2>
+<div class="container">
+    <h2 class="text-center my-2">Create Item</h2>
 
         <div class="row flex-grow-1">
 
@@ -19,7 +19,7 @@
                     <span class="material-icons me-2">add_circle</span> Create New Template
                 </button>            
             </div>
-            <div class="card mb-3 flex-grow-1">
+            <div class="card mb-3 flex-grow-1 scrolling">
                 <div class="card-header">
                     Items
                 </div>
@@ -49,7 +49,7 @@
 
         <!-- Item Instances Column -->
         <div class="col-md-6 d-flex flex-column">
-            <div class="mb-3">
+            <div class="d-flex flex-column mb-3">
                 <h3 class="text-center my-4">Add an Item to a Pocket</h3>
                 <div class="row g-2 mb-2">
                     <div class="col-12 col-lg-4">
@@ -68,14 +68,12 @@
                 </div>
             </div>
             
-            <div class="card mb-3 flex-grow-1" style="max-height: 400px; overflow-y: auto;">
+            <div class="card mb-3 flex-grow-1 scrolling">
                 <div class="card-header">
                     Item Instances
                 </div>
-                <div class="card-body">
-                    <div id="item_instances">
-                        <!-- Item instances will be dynamically loaded here based on selected BeePocket -->
-                    </div>
+                <div class="card-body" id="item_instances">
+                    <!-- The item instances will be dynamically populated here -->
                 </div>
             </div>
         </div>
@@ -84,7 +82,7 @@
 
 <!-- Create Item Modal -->
 <div class="modal fade" id="createItemModal" tabindex="-1" aria-labelledby="createItemModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="createItemModalLabel">Create New Item</h5>
@@ -136,10 +134,10 @@
 
 <!-- Create ItemInstance Modal -->
 <div class="modal fade" id="createItemInstanceModal" tabindex="-1" aria-labelledby="createItemInstanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createItemInstanceModalLabel">Create New ItemInstance</h5>
+                <h5 class="modal-title" id="createItemInstanceModalLabel">Create New Item Instance</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -196,16 +194,5 @@
         </div>
     </div>
 </div>
-
-<script>
-document.getElementById('item_category').addEventListener('change', function() {
-    var newCategoryInput = document.getElementById('new_category_name');
-    if (this.value === 'new') {
-        newCategoryInput.style.display = 'block';
-    } else {
-        newCategoryInput.style.display = 'none';
-    }
-});
-</script>
 
 {% endblock %}

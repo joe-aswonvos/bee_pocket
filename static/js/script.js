@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalElements = document.querySelectorAll(".modal");
   modalElements.forEach((modal) => {
     modal.addEventListener("show.bs.modal", function () {
-      // Set modal to higher z-index immediately
-      modal.style.zIndex = "1050";
+      document.body.appendChild(modal);
 
       setTimeout(() => {
         // Configure backdrop properly
@@ -55,32 +54,44 @@ function showItemInstances(beepocketId) {
     .then((data) => {
       const itemInstancesDiv = document.getElementById("item_instances");
       itemInstancesDiv.innerHTML = "";
-      data.item_instances.forEach((instance) => {
+
+      // Sort items: approved items at the bottom
+      const sortedItems = data.item_instances.sort((a, b) => a.approved - b.approved);
+
+      sortedItems.forEach((instance) => {
         const card = document.createElement("div");
-        card.className = "col-md-12";
+        card.className = "d-flex justify-content-between align-items-center mb-2";
         card.innerHTML = `
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            ${instance.item_name}
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">Created By: ${instance.created_by}</p>
-                            <p class="card-text">Created On: ${instance.created_on}</p>
-                            <p class="card-text">Active Status: ${instance.active_status}</p>
-                            <p class="card-text">Approved: ${instance.approved}</p>
-                            <a href="/create/approve_item_instance/${instance.id}/" class="btn btn-success btn-sm" title="Approve Instance">
-                                <span class="material-icons">check_circle</span>
-                            </a>
-                            <a href="/create/edit_item_instance/${instance.id}/" class="btn btn-warning btn-sm" title="Edit Instance">
-                                <span class="material-icons">edit</span>
-                            </a>
-                            <a href="/create/delete_item_instance/${instance.id}/" class="btn btn-danger btn-sm" title="Delete Instance">
-                                <span class="material-icons">delete</span>
-                            </a>
-                        </div>
-                    </div>
+                  <div>
+                    <h5 class="card-title">${instance.item_name}</h5>
+                    <p class="card-text">Created By: ${instance.created_by}</p>
+                    <p class="card-text">Created On: ${instance.created_on}</p>
+                    <p class="card-text">Active Status: ${instance.active_status}</p>
+                    <p class="card-text">Approved: ${instance.approved}</p>
+                  </div>
+                  <div>
+                    <a href="/create/approve_item_instance/${instance.id}/" class="btn btn-success btn-sm ${instance.approved ? 'disabled' : ''}" title="Approve Instance">
+                      <span class="material-icons">check_circle</span>
+                    </a>
+                    <a href="/create/edit_item_instance/${instance.id}/" class="btn btn-warning btn-sm ${instance.approved ? 'disabled' : ''}" title="Edit Instance">
+                      <span class="material-icons">edit</span>
+                    </a>
+                    <a href="/create/delete_item_instance/${instance.id}/" class="btn btn-danger btn-sm ${instance.approved ? 'disabled' : ''}" title="Delete Instance">
+                      <span class="material-icons">delete</span>
+                    </a>
+                  </div>
+                        
                 `;
         itemInstancesDiv.appendChild(card);
       });
     });
 }
+
+document.getElementById('item_category').addEventListener('change', function() {
+    var newCategoryInput = document.getElementById('new_category_name');
+    if (this.value === 'new') {
+        newCategoryInput.style.display = 'block';
+    } else {
+        newCategoryInput.style.display = 'none';
+    }
+});

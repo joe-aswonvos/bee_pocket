@@ -117,6 +117,8 @@ def item_instances(request, beepocket_id):
 def approve_item_instance(request, instance_id):
     instance = get_object_or_404(ItemInstance, id=instance_id)
     instance.Approved = True
+    instance.ApprovedOn = timezone.now()
+    instance.ActiveStatus = False
     instance.save()
     return redirect('create_item')
 

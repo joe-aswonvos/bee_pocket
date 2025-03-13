@@ -38,38 +38,39 @@
               <h5>Details</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between">
-                  <span>Type:</span>
-                  <span>{{ item.item.item_type }}</span>
+                  <span>Category:</span>
+                  <span>{{ item.item.item_category }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                   <span>Date Created:</span>
                   <span>{{ item.CreatedOn|date:"F j, Y" }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
+                  {% if item.Approved %}
                   <span>Date Approved:</span>
                   <span>{{ item.ApprovedOn|date:"F j, Y" }}</span>
+                  {% else %}
+                  <span>Expires:</span>
+                  <span>{{ item.expireon|date:"F j, Y" }}</span>
+                  {% endif %}
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                   <span>Status:</span>
                   <span>
-                    {% if item.active_status %}
+                    {% if item.ActiveStatus %}
                     <span class="badge bg-success">Active</span>
                     {% else %}
                     <span class="badge bg-secondary">Inactive</span>
                     {% endif %}
                   </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>BeePocket:</span>
-                  <span>{{ item.beepocket.beepocket_name }}</span>
-                </li>
               </ul>
             </div>
             <div class="col-md-6">
               <h5>Description</h5>
               <div class="p-3 bg-light rounded">
-                {% if item.item.description %}
-                <p class="mb-0">{{ item.item.description }}</p>
+                {% if item.item.item_description %}
+                <p class="mb-0">{{ item.item.item_description }}</p>
                 {% else %}
                 <p class="text-muted mb-0">No description available.</p>
                 {% endif %}
