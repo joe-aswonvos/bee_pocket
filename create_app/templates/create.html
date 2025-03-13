@@ -161,7 +161,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="expireon" class="form-label">Expire On (default 24 hours)</label>
-                        <input type="datetime-local" class="form-control" id="expireon" name="expireon" value="{{ default_expireon }}" required>
+                        <input type="datetime-local" class="form-control" id="expireon" name="expireon" required>
                     </div>
                     <button type="submit" class="btn btn-success">Create ItemInstance</button>
                 </form>
@@ -194,5 +194,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const expireonInput = document.getElementById('expireon');
+        if (expireonInput) {
+            const now = new Date();
+            const expireon = new Date(now.getTime() + 24 * 60 * 60 * 1000); // Now + 24 hours
+            const year = expireon.getFullYear();
+            const month = String(expireon.getMonth() + 1).padStart(2, '0');
+            const day = String(expireon.getDate()).padStart(2, '0');
+            const hours = String(expireon.getHours()).padStart(2, '0');
+            const minutes = String(expireon.getMinutes()).padStart(2, '0');
+            const formattedExpireon = `${year}-${month}-${day}T${hours}:${minutes}`;
+            expireonInput.value = formattedExpireon;
+        }
+    });
+</script>
 
 {% endblock %}
