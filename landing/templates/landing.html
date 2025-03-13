@@ -1,19 +1,33 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
   {% if user.is_authenticated %}
     <!-- Content for logged-in users -->
-    <div class="jumbotron">
-        <h1>Welcome to Your Bee Pocket</h1>
-        <p>This is where some how-to content is going to appear</p>
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to Your Bee Pocket</h1>
+        <p class="lead">This is where some how-to content is going to appear</p>
     </div>
   {% else %}
     <!-- Marketing content, login/signup buttons -->
-    <div class="jumbotron">
-      <h1>Welcome to Bee Pocket</h1>
-      <p>The easy way for your family to manage pocket money, tasks, behaviours and rewards</p>
-      <a href="{% url 'account_login' %}" class="btn btn-primary">Login</a>
-      <a href="{% url 'account_signup' %}" class="btn btn-success">Sign Up</a>
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Welcome to Bee Pocket</h1>
+      <p class="lead">The easy way for your family to manage pocket money, tasks, behaviours, and rewards</p>
+      <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg m-2">Login</a>
+      <a href="{% url 'account_signup' %}" class="btn btn-success btn-lg m-2">Sign Up</a>
     </div>
   {% endif %}
+
+  <!-- About section -->
+  <div class="container text-center mt-4">
+    <button class="btn btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
+      <i class="material-icons">expand_more</i> About Bee Pocket <i class="material-icons">expand_more</i>
+    </button>
+    <div class="collapse mt-3" id="aboutSection">
+      <div class="card card-body">
+        <h5 class="card-title">About Bee Pocket</h5>
+        <p class="card-text">Bee Pocket is a comprehensive tool designed to help families manage pocket money, tasks, behaviours, and rewards in an easy and efficient way. Our platform provides a user-friendly interface and a variety of features to ensure that managing family finances and responsibilities is a breeze.</p>
+      </div>
+    </div>
+  </div>
 {% endblock %}
