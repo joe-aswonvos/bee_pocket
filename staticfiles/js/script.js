@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
   // Ensure modals have proper z-index when opened
   const modalElements = document.querySelectorAll(".modal");
   modalElements.forEach((modal) => {
@@ -39,9 +38,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Initialize Bootstrap toasts if present
+  var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+  var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl);
+  });
+  toastList.forEach((toast) => toast.show());
+
+  // Check if the element with id "beepocket_select" exists before running the script
   const defaultBeepocketSelect = document.getElementById("beepocket_select");
-  if (defaultBeepocketSelect.value) {
-    showItemInstances(defaultBeepocketSelect.value);
+  if (defaultBeepocketSelect) {
+    if (defaultBeepocketSelect.value) {
+      showItemInstances(defaultBeepocketSelect.value);
+    }
+  }
+
+  // Check if the element with id "item_category" exists before adding event listener
+  const itemCategorySelect = document.getElementById("item_category");
+  if (itemCategorySelect) {
+    itemCategorySelect.addEventListener("change", function () {
+      var newCategoryInput = document.getElementById("new_category_name");
+      if (this.value === "new") {
+        newCategoryInput.style.display = "block";
+      } else {
+        newCategoryInput.style.display = "none";
+      }
+    });
   }
 });
 
@@ -56,27 +78,48 @@ function showItemInstances(beepocketId) {
       itemInstancesDiv.innerHTML = "";
 
       // Sort items: approved items at the bottom
-      const sortedItems = data.item_instances.sort((a, b) => a.approved - b.approved);
+      const sortedItems = data.item_instances.sort(
+        (a, b) => a.approved - b.approved
+      );
 
       sortedItems.forEach((instance) => {
         const card = document.createElement("div");
-        card.className = "d-flex justify-content-between align-items-center mb-2";
+        card.className =
+          "d-flex justify-content-between align-items-center mb-2";
         card.innerHTML = `
                   <div>
-                    <h5 class="card-title">${instance.approved ? instance.item_name + ' - APPROVED' : instance.item_name}</h5>
+                    <h5 class="card-title">${
+                      instance.approved
+                        ? instance.item_name + " - APPROVED"
+                        : instance.item_name
+                    }</h5>
                     <p class="card-text">Created By: ${instance.created_by}</p>
                     <p class="card-text">Created On: ${instance.created_on}</p>
-                    <p class="card-text">Active Status: ${instance.active_status}</p>
+                    <p class="card-text">Active Status: ${
+                      instance.active_status
+                    }</p>
                     <p class="card-text">Approved: ${instance.approved}</p>
                   </div>
                   <div>
-                    <a href="/create/approve_item_instance/${instance.id}/" class="btn btn-success btn-sm ${instance.approved ? 'disabled' : ''}" title="Approve Instance">
+                    <a href="/create/approve_item_instance/${
+                      instance.id
+                    }/" class="btn btn-success btn-sm ${
+          instance.approved ? "disabled" : ""
+        }" title="Approve Instance">
                       <span class="material-icons">check_circle</span>
                     </a>
-                    <a href="/create/edit_item_instance/${instance.id}/" class="btn btn-warning btn-sm ${instance.approved ? 'disabled' : ''}" title="Edit Instance">
+                    <a href="/create/edit_item_instance/${
+                      instance.id
+                    }/" class="btn btn-warning btn-sm ${
+          instance.approved ? "disabled" : ""
+        }" title="Edit Instance">
                       <span class="material-icons">edit</span>
                     </a>
-                    <a href="/create/delete_item_instance/${instance.id}/" class="btn btn-danger btn-sm ${instance.approved ? 'disabled' : ''}" title="Delete Instance">
+                    <a href="/create/delete_item_instance/${
+                      instance.id
+                    }/" class="btn btn-danger btn-sm ${
+          instance.approved ? "disabled" : ""
+        }" title="Delete Instance">
                       <span class="material-icons">delete</span>
                     </a>
                   </div>
@@ -86,12 +129,3 @@ function showItemInstances(beepocketId) {
       });
     });
 }
-
-document.getElementById('item_category').addEventListener('change', function() {
-    var newCategoryInput = document.getElementById('new_category_name');
-    if (this.value === 'new') {
-        newCategoryInput.style.display = 'block';
-    } else {
-        newCategoryInput.style.display = 'none';
-    }
-});
