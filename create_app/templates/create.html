@@ -37,9 +37,15 @@
                                 <a href="{% url 'edit_item' item.id %}" class="btn btn-warning btn-sm" title="Edit Item">
                                     <span class="material-icons">edit</span>
                                 </a>
+                                {% if item|has_instances %}
+                                <button class="btn btn-danger btn-sm disabled" title="Cannot delete item with instances" disabled>
+                                    <span class="material-icons">delete</span>
+                                </button>
+                                {% else %}
                                 <a href="{% url 'delete_item' item.id %}" class="btn btn-danger btn-sm" title="Delete Item">
                                     <span class="material-icons">delete</span>
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

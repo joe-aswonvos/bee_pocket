@@ -1,5 +1,6 @@
 from django import template
 from admin_app.models import Account
+from pocket_app.models import ItemInstance
 
 register = template.Library()
 
@@ -25,3 +26,6 @@ def is_account_owner(user):
     except Account.DoesNotExist:
         return False
 
+@register.filter
+def has_instances(item):
+    return ItemInstance.objects.filter(item=item).exists()
