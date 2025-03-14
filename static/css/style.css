@@ -102,6 +102,12 @@
    z-index: var(--z-content);
  }
  
+ /* My Pockets containers */
+
+  #sting-container, #pollen-container, #honey-container {
+    min-height: 181px;
+  }
+
  /* ====================================
   * 4. HEADER AND NAVIGATION
   * ==================================== */

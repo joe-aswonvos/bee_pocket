@@ -1,5 +1,5 @@
 from django import template
-from admin_app.models import Account
+from admin_app.models import Account, BeePocket
 from pocket_app.models import ItemInstance
 
 register = template.Library()
@@ -29,3 +29,7 @@ def is_account_owner(user):
 @register.filter
 def has_instances(item):
     return ItemInstance.objects.filter(item=item).exists()
+
+@register.filter
+def pocket_has_instances(beepocket):
+    return ItemInstance.objects.filter(BeePocketID=beepocket, ActiveStatus=True).exists()

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block title %}Manage Account{% endblock %}
 
 {% block content %}
@@ -69,9 +70,15 @@
                                 <a href="{% url 'edit_beepocket' account.id beepocket.id %}" class="btn btn-warning btn-sm" title="Edit">
                                     <span class="material-icons">edit</span>
                                 </a>
+                                {% if beepocket|pocket_has_instances %}
+                                <button class="btn btn-danger btn-sm disabled" title="Cannot delete item with instances" disabled>
+                                    <span class="material-icons">delete</span>
+                                </button>
+                                {% else %}
                                 <a href="{% url 'delete_beepocket' account.id beepocket.id %}" class="btn btn-danger btn-sm" title="Delete">
                                     <span class="material-icons">delete</span>
                                 </a>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

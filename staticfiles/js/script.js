@@ -63,7 +63,7 @@ function showItemInstances(beepocketId) {
         card.className = "d-flex justify-content-between align-items-center mb-2";
         card.innerHTML = `
                   <div>
-                    <h5 class="card-title">${instance.item_name}</h5>
+                    <h5 class="card-title">${instance.approved ? instance.item_name + ' - APPROVED' : instance.item_name}</h5>
                     <p class="card-text">Created By: ${instance.created_by}</p>
                     <p class="card-text">Created On: ${instance.created_on}</p>
                     <p class="card-text">Active Status: ${instance.active_status}</p>
