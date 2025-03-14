@@ -29,7 +29,11 @@
             {{ item.item.item_name }}
           </h2>
           <span class="badge {% if item.item.item_type == 'Task' %}bg-success{% elif item.item.item_type == 'Consequence' %}bg-danger{% else %}bg-warning text-dark{% endif %} fs-5">
-            {% if item.item.item_type == 'Task' %}+{% else %}-{% endif %}{{ item.item.item_value }}
+            {% if item.item.item_type == 'Task' %}+{% else %}-{% endif %}
+            {% if bee_pocket.units == 'GBP' %}£{% endif %}
+            {% if bee_pocket.units == 'EUR' %}€{% endif %}
+            {% if bee_pocket.units == 'USD' %}${% endif %}
+            {{ item.item.item_value }}
           </span>
         </div>
         <div class="card-body">

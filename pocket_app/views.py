@@ -137,9 +137,13 @@ def item_detail(request, item_id):
     comments = Comment.objects.filter(
         ItemInstance=item_instance).order_by('CreatedOn')
 
+    #Get the Beepocket associated with this item instance
+    bee_pocket = item_instance.BeePocketID
+     
     context = {
         'item': item_instance,
-        'comments': comments
+        'comments': comments,
+        'bee_pocket': bee_pocket,
     }
 
     return render(request, 'item_detail.html', context)
