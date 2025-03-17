@@ -28,22 +28,27 @@
     <div class="col-md-6 d-flex">
       <div class="card h-100 flex-grow-1">
         <div class="card-header">
-          <h4 class="m-0">Current Balance</h4>
+          <h4 class="m-0">Honey Pot</h4>
         </div>
         <div class="card-body">
-          <div class="display-4 text-center">
-            {% if selected_beepocket %}
-              {% if selected_beepocket.units != 'non-currency' %}
-                <span class="currency-symbol">
-                  {% if selected_beepocket.units == 'GBP' %}£{% endif %}
-                  {% if selected_beepocket.units == 'EUR' %}€{% endif %}
-                  {% if selected_beepocket.units == 'USD' %}${% endif %}
-                </span>
+          <div class="row simple d-flex align-items-center">
+            <div class="col-md-4">
+                <img src="{% static 'images/honeypot.webp' %}" alt="honey-pot" class="img-fluid" style="max-height: 100px;">
+            </div>
+            <div class="col-md-8 display-4 text-center">
+              {% if selected_beepocket %}
+                {% if selected_beepocket.units != 'non-currency' %}
+                  <span class="currency-symbol">
+                    {% if selected_beepocket.units == 'GBP' %}£{% endif %}
+                    {% if selected_beepocket.units == 'EUR' %}€{% endif %}
+                    {% if selected_beepocket.units == 'USD' %}${% endif %}
+                  </span>
+                {% endif %}
+                <span id="balance-amount">{{ balance }}</span>
+              {% else %}
+                <span class="text-muted">No BeePocket selected</span>
               {% endif %}
-              <span id="balance-amount">{{ balance }}</span>
-            {% else %}
-              <span class="text-muted">No BeePocket selected</span>
-            {% endif %}
+            </div>
           </div>
         </div>
       </div>

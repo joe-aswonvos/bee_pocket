@@ -160,8 +160,18 @@
    position: relative;
    background: var(--secondary-color);
    color: var(--primary-color);
+   font-family: var(--primary-font);
    padding-top: 20px;
    z-index: var(--z-footer);
+ }
+
+ .footer-icon {
+   color: var(--primary-color);
+   text-decoration: none;
+ }
+
+ .footer-icon:hover {
+   color: var(--tertiary-color);
  }
  
  /* Wave pattern above footer */

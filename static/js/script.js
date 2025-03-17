@@ -65,6 +65,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  // Check if the type chosen is adjustment, then change value label
+  const itemTypeSelect = document.getElementById("item_type");
+  if (itemTypeSelect) {
+    itemTypeSelect.addEventListener("change", function () {
+      const itemValueLabel = document.getElementById("item_value_label");
+      if (this.value === "Adjustment") {
+        itemValueLabel.textContent =
+          "Item Value (Adjustments can be positive or negative)";
+      } else {
+        itemValueLabel.textContent =
+          "Item Value (Please enter a positive integer)";
+      }
+    });
+  }
 });
 
 function editComment(commentId) {
