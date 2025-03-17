@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.forms import modelformset_factory
+from django.db.models import Count, Exists, OuterRef
 from datetime import timedelta
-from admin_app.models import User, BeePocket, UserPermission, Account
-from pocket_app.forms import ItemForm, CategoryFormSet
-from pocket_app.models import Item, Category, ItemInstance
+from admin_app.models import BeePocket, UserPermission, Account
+from pocket_app.models import Item, Category, ItemInstance, CommentReadStatus, Comment
 
 
 @login_required
@@ -108,7 +108,19 @@ def create_item_instance(request):
 
 @login_required
 def item_instances(request, beepocket_id):
-    item_instances = ItemInstance.objects.filter(BeePocketID=beepocket_id)
+    user = request.user
+    
+    unread_comments_subquery = Comment.objects.filter(
+            ItemInstance=OuterRef('pk')
+        ).exclude(
+            commentreadstatus__user=user
+        ).values('pk')
+    
+    item_instances = ItemInstance.objects.filter(BeePocketID=beepocket_id).annotate(
+        comment_count=Count('comment'),
+        has_unread_comments=Exists(unread_comments_subquery)
+    )
+
     data = {
         'item_instances': [
             {
@@ -117,7 +129,9 @@ def item_instances(request, beepocket_id):
                 'created_by': instance.CreatedBy.username,
                 'created_on': instance.CreatedOn.strftime('%Y-%m-%d %H:%M:%S'),
                 'active_status': instance.ActiveStatus,
-                'approved': instance.Approved
+                'approved': instance.Approved,
+                'comment_count': instance.comment_count,
+                'has_unread_comments': instance.has_unread_comments
             }
             for instance in item_instances
         ]

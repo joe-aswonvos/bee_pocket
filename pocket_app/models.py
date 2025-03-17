@@ -143,6 +143,18 @@ class Comment(models.Model):
     Comment = models.CharField(max_length=500)
     CreatedBy = models.ForeignKey(User, on_delete=models.PROTECT)
     CreatedOn = models.DateTimeField(auto_now_add=True)
+    ReadFlag = models.BooleanField(default=False)
 
     def __str__(self):
         return self.Comment
+    
+class CommentReadStatus(models.Model):
+    """
+    This is the CommentReadStatus model. It is a model for the read status of a comment.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+    
+    class Meta:
+        unique_together = ('user', 'comment')

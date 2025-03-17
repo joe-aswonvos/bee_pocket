@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Category, ItemInstance, Comment, Repeatability, Weekday
+from .models import Item, Category, ItemInstance, Comment, Repeatability, Weekday, CommentReadStatus
 
 class RepeatabilityAdmin(admin.ModelAdmin):
     list_display = ('RepeatableDaily', 'WeeklyRepeatInterval')
@@ -21,11 +21,15 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ('item_category', 'item_type')
     ordering = ('createdon',)
     search_fields = ('item_name', 'item_description')
+    
+class CommentReadStatusAdmin(admin.ModelAdmin):
+    list_display = ('comment', 'user', 'read')
 
 # Register your models here.
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category)
 admin.site.register(ItemInstance, ItemInstanceAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(CommentReadStatus, CommentReadStatusAdmin)
 admin.site.register(Repeatability, RepeatabilityAdmin)
 admin.site.register(Weekday)

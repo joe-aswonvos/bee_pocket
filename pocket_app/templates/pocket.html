@@ -80,13 +80,17 @@
           <div class="card item-card mb-3" onclick="window.location.href='{% url 'item_detail' item.id %}'">
             <div class="card-body p-3">
               <div class="justify-content-between align-items-center row">
-                <h5 class="card-title mb-1 col-10">{{ item.item.item_name }}</h5>
+                <h5 class="card-title mb-1 col-8">{{ item.item.item_name }}</h5>
                 <span class="badge bg-success col-2">
                   +
                   {% if selected_beepocket.units == 'GBP' %}£{% endif %}
                   {% if selected_beepocket.units == 'EUR' %}€{% endif %}
                   {% if selected_beepocket.units == 'USD' %}${% endif %}
                   {{ item.item.item_value }}</span>
+                <span class="badge col-2 {% if item.has_unread_comments %}text-warning{% else %}text-secondary{% endif %}">
+                  <span class="material-icons">comment</span>
+                  {{ item.comment_count }}
+                </span>
               </div>
               {% if item.Approved %}
               <span class="text-muted small">Completed: {{ item.ApprovedOn|date:"M d, Y" }}</span>
@@ -121,13 +125,17 @@
             {% for item in sting_items %}
               <div class="card item-card mb-3" onclick="window.location.href='{% url 'item_detail' item.id %}'">
                 <div class="card-body p-3">
-                  <div class="justify-content-between align-items-center row">
-                    <h5 class="card-title mb-1 col-10">{{ item.item.item_name }}</h5>
+                  <div class="justify-content-start align-items-center row">
+                    <h5 class="card-title mb-1 col-8">{{ item.item.item_name }}</h5>
                     <span class="badge bg-danger col-2">-
                       {% if selected_beepocket.units == 'GBP' %}£{% endif %}
                       {% if selected_beepocket.units == 'EUR' %}€{% endif %}
                       {% if selected_beepocket.units == 'USD' %}${% endif %}
                       {{ item.item.item_value }}</span>
+                    <span class="badge col-2 {% if item.has_unread_comments %}text-warning{% else %}text-secondary{% endif %}">
+                      <span class="material-icons">comment</span>
+                      {{ item.comment_count }}
+                    </span>
                   </div>
                   {% if item.Approved %}
                     <span class="text-muted small">Received: {{ item.ApprovedOn|date:"M d, Y" }}</span>
@@ -163,19 +171,25 @@
             <div class="card item-card mb-3" onclick="window.location.href='{% url 'item_detail' item.id %}'">
               <div class="card-body p-3">
                 <div class="justify-content-between align-items-center row">
-                  <h5 class="card-title mb-1 col-10">{{ item.item.item_name }}</h5>
+                  <h5 class="card-title mb-1 col-8">{{ item.item.item_name }}</h5>
                   <span class="badge bg-warning col-2">-
                     {% if selected_beepocket.units == 'GBP' %}£{% endif %}
                     {% if selected_beepocket.units == 'EUR' %}€{% endif %}
                     {% if selected_beepocket.units == 'USD' %}${% endif %}
                     {{ item.item.item_value }}</span>
+                  <span class="badge col-2 {% if item.has_unread_comments %}text-warning{% else %}text-secondary{% endif %}">
+                    <span class="material-icons">comment</span>
+                    {{ item.comment_count }}
+                  </span>
                 </div>
                 {% if item.Approved %}
                   <span class="text-muted small">Received: {{ item.ApprovedOn|date:"M d, Y" }}</span>
                 {% else %}
                   <span class="text-muted small">Expires: {{ item.expireon|date:"M d, Y" }}</span>
                 {% endif %}
-                <p class="card-text text-muted small description">{{ item.item.item_description }}</p>
+                <div class="d-flex simple justify-content-between align-items-center mt-2">
+                  <span class="text-muted small description">{{ item.item.item_description }}</span>
+                </div>
               </div>
             </div>
             {% endfor %}

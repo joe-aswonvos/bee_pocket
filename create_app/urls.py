@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from pocket_app import views as pocket_views
 
 urlpatterns = [
     path('', views.create_item, name='create_item'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
     path('edit_item_instance/<int:instance_id>/', views.edit_item_instance, name='edit_item_instance'),
     path('delete_item_instance/<int:instance_id>/', views.delete_item_instance, name='delete_item_instance'),
+    path('item/<int:item_id>/', pocket_views.item_detail, name='item_detail'),
 ]

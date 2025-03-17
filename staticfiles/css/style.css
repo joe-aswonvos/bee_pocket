@@ -277,22 +277,22 @@
   * 7. CARD LIST ITEMS
   * ==================================== */
  /* Individual items within card bodies */
- .card-body .d-flex {
-   background-color: rgba(var(--contrast-color-rgb), 0.8);
-   border-left: 3px solid var(--primary-color);
-   border-radius: 4px;
-   padding: 12px;
-   margin-bottom: 12px;
-   transition: all 0.2s ease-in-out;
-   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
- }
+.card-body .d-flex:not(.simple) {
+  background-color: rgba(var(--contrast-color-rgb), 0.8);
+  border-left: 3px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
  
  /* Hover effect for card items */
- .card-body .d-flex:hover{
-   background-color: rgba(var(--primary-color-rgb), 0.1);
-   transform: translateX(3px);
-   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
- }
+.card-body .d-flex:not(.simple):hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  transform: translateX(3px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
  
  /* Card content typography */
  .card-body .card-title {

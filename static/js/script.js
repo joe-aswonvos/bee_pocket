@@ -67,6 +67,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function editComment(commentId) {
+  document.getElementById(`comment-text-${commentId}`).classList.add("d-none");
+  document
+    .getElementById(`edit-comment-form-${commentId}`)
+    .classList.remove("d-none");
+}
+
+function cancelEdit(commentId) {
+  document
+    .getElementById(`comment-text-${commentId}`)
+    .classList.remove("d-none");
+  document
+    .getElementById(`edit-comment-form-${commentId}`)
+    .classList.add("d-none");
+}
+
 function showItemInstances(beepocketId) {
   if (!beepocketId) return;
 
@@ -88,11 +104,15 @@ function showItemInstances(beepocketId) {
           "d-flex justify-content-between align-items-center mb-2";
         card.innerHTML = `
                   <div>
-                    <h5 class="card-title">${
-                      instance.approved
-                        ? instance.item_name + " - APPROVED"
-                        : instance.item_name
-                    }</h5>
+                    <h5 class="card-title">
+                      <a href="/create/item/${instance.id}/">
+                        ${
+                          instance.approved
+                            ? instance.item_name + " - APPROVED"
+                            : instance.item_name
+                        } 
+                      </a>
+                    </h5>
                     <p class="card-text">Created By: ${instance.created_by}</p>
                     <p class="card-text">Created On: ${instance.created_on}</p>
                     <p class="card-text">Active Status: ${
@@ -101,6 +121,14 @@ function showItemInstances(beepocketId) {
                     <p class="card-text">Approved: ${instance.approved}</p>
                   </div>
                   <div>
+                    <span class="badge ${
+                      instance.has_unread_comments
+                        ? "text-warning"
+                        : "text-secondary"
+                    }">
+                      <span class="material-icons">comment</span>
+                      ${instance.comment_count}
+                    </span>
                     <a href="/create/approve_item_instance/${
                       instance.id
                     }/" class="btn btn-success btn-sm ${
