@@ -16,7 +16,7 @@
         <div class="card-body d-flex justify-content-center align-items-center">
           <select id="beepocket-selector" class="form-select" onchange="location.href='?beepocket_id='+this.value">
             {% for beepocket in beepockets %}
-              <option value="{{ beepocket.id }}" {% if selected_beepocket and selected_beepocket.id == beepocket.id %}selected{% endif %}>
+              <option class="bee-pocket-selector" value="{{ beepocket.id }}" {% if selected_beepocket and selected_beepocket.id == beepocket.id %}selected{% endif %}>
                 {{ beepocket.beepocket_name }}
               </option>
             {% endfor %}

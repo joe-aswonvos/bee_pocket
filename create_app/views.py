@@ -156,7 +156,7 @@ def approve_item_instance(request, instance_id):
     instance.ApprovedOn = timezone.now()
     instance.ActiveStatus = False
     instance.ApprovedBy = request.user
-    instance.save()
+    instance.save()    
     messages.success(
         request, f'"{instance.item.item_name}" approved successfully')
     return redirect('create_item')
