@@ -6,15 +6,16 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center my-2">Create Item</h2>
+    <h2 class="text-center my-2 primary-color mb-2">Create Item</h2>
 
         <div class="row flex-grow-1">
+            <p>First create a template, which is fully reusable across all the pockets you manage, then create a new item in a specific bee pocket!.</p>
 
         <!-- Items Column -->
 
         <div class="col-md-6 d-flex flex-column">
             <div class="d-flex flex-column mb-3">
-                <h3 class="text-center my-4">Create an Item Template</h3>
+                <h3 class="text-center mb-4">Create an Item Template</h3>
                 <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
                     <span class="material-icons me-2">add_circle</span> Create New Template
                 </button>            
@@ -56,7 +57,7 @@
         <!-- Item Instances Column -->
         <div class="col-md-6 d-flex flex-column">
             <div class="d-flex flex-column mb-3">
-                <h3 class="text-center my-4">Add an Item to a Pocket</h3>
+                <h3 class="text-center mb-4">Add an Item to a Pocket</h3>
                 <div class="row g-2 mb-2">
                     <div class="col-12 col-lg-4">
                         <label for="beepocket_select" class="form-label visually-hidden">Select BeePocket</label>
