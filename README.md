@@ -7,14 +7,19 @@ The repository for my Code Institute Bootcamp capstone project.
 1.  [Project Overview](#project-overview)
 2.  [Technologies Used](#technologies-used)
 3.  [Project Aims](#project-aims)
-4.  [Application Breakdown](#application-breakdown)
+4.  [User Experience Design](#user-experience-design)
+5.  [Application Breakdown](#application-breakdown)
     *   [admin\_app](#admin_app)
     *   [landing](#landing)
     *   [create\_app](#create_app)
     *   [pocket\_app](#pocket_app)
-5.  [Features](#features)
-6.  [Future Enhancements](#future-enhancements)
-7.  [Credits](#credits)
+6.  [Features](#features)
+7.  [Agile Methodology](#agile-methodology)
+8.  [Project Board](#project-board)
+9.  [Testing](#testing)
+10.  [Deployment](#deployment)
+11.  [Future Enhancements](#future-enhancements)
+12.  [Credits](#credits)
 
 ## Project Overview
 
@@ -46,6 +51,15 @@ The primary aims of this project are to:
 *   Implement user authentication and authorization for secure access.
 *   Create a responsive and accessible web application.
 
+## User Experience Design
+
+The user experience design focuses on creating an intuitive and engaging interface for both parents and children. Key design principles include:
+
+*   **Ease of Use**: Simple navigation and clear instructions for managing tasks and rewards.
+*   **Responsiveness**: Ensuring the application works seamlessly on both desktop and mobile devices.
+*   **Accessibility**: Making the application accessible to users with disabilities by following web accessibility guidelines.
+*   **Visual Appeal**: Using a clean and modern design with engaging visuals and icons.
+
 ## Application Breakdown
 
 The project is structured into several Django apps, each serving a specific purpose:
@@ -70,7 +84,7 @@ The project is structured into several Django apps, each serving a specific purp
 *   **Purpose**: Manages the creation, editing, and deletion of items (tasks, consequences, rewards) and item instances (specific transactions).
 *   **Models**:
     *   `Item`: Represents a template for a transaction (e.g., "Clean your room").
-     *   `Category`: Represents a category for an item (e.g. "Chores").
+    *   `Category`: Represents a category for an item (e.g., "Chores").
 *   **Views**:
     *   `create_item`: Creates new items.
     *   `create_item_instance`: Creates new item instances.
@@ -86,7 +100,7 @@ The project is structured into several Django apps, each serving a specific purp
 *   **Purpose**: Provides the user dashboard for managing BeePockets and viewing item instances.
 *   **Models**:
     *   `ItemInstance`: Represents a specific transaction in a BeePocket.
-     *   `Comment`: Represents a comment on an item instance.
+    *   `Comment`: Represents a comment on an item instance.
 *   **Views**:
     *   `userpage`: Renders the user dashboard, displaying BeePockets, item instances, and balances.
     *   `item_detail`: Displays details for a specific item instance and allows users to add comments.
@@ -103,6 +117,42 @@ The project is structured into several Django apps, each serving a specific purp
 *   User dashboard for viewing BeePockets, balances, and item instances.
 *   Commenting on item instances.
 *   Responsive design for mobile and desktop devices.
+
+## Agile Methodology
+
+The project follows Agile methodology to ensure iterative development and continuous improvement. Key practices include:
+
+*   **Sprint Planning**: Defining goals and tasks for each sprint.
+*   **Daily Stand-ups**: Regular meetings to discuss progress and address any blockers.
+*   **Sprint Reviews**: Reviewing completed work at the end of each sprint.
+*   **Retrospectives**: Reflecting on the sprint to identify areas for improvement.
+
+## Project Board
+
+The project board is used to track tasks and progress. It includes columns for:
+
+*   **Backlog**: List of tasks to be completed.
+*   **In Progress**: Tasks currently being worked on.
+*   **Review**: Tasks that are completed and awaiting review.
+*   **Done**: Tasks that are completed and approved.
+
+## Testing
+
+Testing is an integral part of the development process to ensure the application works as expected. Key testing practices include:
+
+*   **Unit Testing**: Testing individual components and functions.
+*   **Integration Testing**: Testing the interaction between different components.
+*   **User Acceptance Testing (UAT)**: Ensuring the application meets user requirements.
+*   **Automated Testing**: Using tools to automate repetitive testing tasks.
+
+## Deployment
+
+The application is deployed using the following steps:
+
+1.  **Prepare the Environment**: Set up the server and install necessary dependencies.
+2.  **Configure the Application**: Update settings and configurations for the production environment.
+3.  **Deploy the Code**: Push the code to the server and run necessary migrations.
+4.  **Monitor and Maintain**: Continuously monitor the application and perform regular maintenance.
 
 ## Future Enhancements
 

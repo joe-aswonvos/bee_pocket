@@ -2,32 +2,39 @@
 {% load static %}
 
 {% block content %}
-  {% if user.is_authenticated %}
-    <!-- Content for logged-in users -->
-    <div class="jumbotron text-center">
-        <h1 class="display-4">Welcome to Your Bee Pocket</h1>
-        <p class="lead">This is where some how-to content is going to appear</p>
-    </div>
-  {% else %}
-    <!-- Marketing content, login/signup buttons -->
-    <div class="jumbotron text-center">
-      <h1 class="display-4">Welcome to Bee Pocket</h1>
-      <p class="lead">The easy way for your family to manage pocket money, tasks, behaviours, and rewards</p>
-      <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg m-2">Login</a>
-      <a href="{% url 'account_signup' %}" class="btn btn-success btn-lg m-2">Sign Up</a>
-    </div>
-  {% endif %}
+{% if user.is_authenticated %}
+<!-- Content for logged-in users -->
+<div class="jumbotron text-center">
+  <h1 class="mb-4 primary-color">Welcome to Your Bee Pocket</h1>
+  <p class="lead">Thank you for signing up and showing interest in our service! We're currently in our alpha stage,
+    buzzing away to make everything just right. If you'd like to be part of our early testing and help shape the future
+    of our pocket-money and behavior management app, we'd love to have you in our hive! Drop us an email at
+    <a href="mailto:info@aswonvos.com">info@aswonvos.com</a>, and we'll get you started.
+  </p>
+</div>
+{% else %}
+<!-- Marketing content, login/signup buttons -->
+<div class="jumbotron text-center">
+  <h1 class="display-4">Welcome to Bee Pocket</h1>
+  <p class="lead">The easy way for your family to manage pocket money, tasks, behaviours, and rewards</p>
+  <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg m-2">Login</a>
+  <a href="{% url 'account_signup' %}" class="btn btn-success btn-lg m-2">Sign Up</a>
+</div>
+{% endif %}
 
-  <!-- About section -->
-  <div class="container text-center mt-4">
-    <button class="btn btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
-      <i class="material-icons">expand_more</i> About Bee Pocket <i class="material-icons">expand_more</i>
-    </button>
-    <div class="collapse mt-3" id="aboutSection">
-      <div class="card card-body">
-        <h5 class="card-title">About Bee Pocket</h5>
-        <p class="card-text">Bee Pocket is a comprehensive tool designed to help families manage pocket money, tasks, behaviours, and rewards in an easy and efficient way. Our platform provides a user-friendly interface and a variety of features to ensure that managing family finances and responsibilities is a breeze.</p>
-      </div>
+<!-- About section -->
+<div class="container text-center mt-4">
+  <button class="btn btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection"
+    aria-expanded="false" aria-controls="aboutSection">
+    <i class="material-icons">expand_more</i> About Bee Pocket <i class="material-icons">expand_more</i>
+  </button>
+  <div class="collapse mt-3" id="aboutSection">
+    <div class="card card-body">
+      <h5 class="card-title">About Bee Pocket</h5>
+      <p class="card-text">Bee Pocket is a comprehensive tool designed to help families manage pocket money, tasks,
+        behaviours, and rewards in an easy and efficient way. Our platform provides a user-friendly interface and a
+        variety of features to ensure that managing family finances and responsibilities is a breeze.</p>
     </div>
   </div>
+</div>
 {% endblock %}

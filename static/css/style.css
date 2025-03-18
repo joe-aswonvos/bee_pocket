@@ -48,6 +48,10 @@
  h1, h2, h3 {
    font-family: var(--primary-font);
  }
+
+ .primary-color {
+   color: var(--primary-color);
+ }
  
  /* Background image with fixed attachment */
  body::before {
@@ -122,6 +126,7 @@
    color: var(--primary-color);
    position: relative;
    z-index: var(--z-header);
+   border-bottom: 2px solid var(--primary-color);
  }
  
  /* Header pattern overlay */
@@ -163,6 +168,7 @@
    font-family: var(--primary-font);
    padding-top: 20px;
    z-index: var(--z-footer);
+   border-top: 2px solid var(--primary-color);
  }
 
  .footer-icon {
