@@ -85,7 +85,7 @@ def create_item(request):
 @login_required
 def create_item_instance(request):
     if request.method == 'POST':
-        item_id = request.POST.get('item')
+        item_id = request.POST.get('select-item')
         beepocket_id = request.POST.get('beepocket')
         expireon = request.POST.get(
             'expireon', (timezone.now() + timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M'))
@@ -94,28 +94,38 @@ def create_item_instance(request):
         beepocket = get_object_or_404(BeePocket, id=beepocket_id)
         user = request.user
 
-        ItemInstance.objects.create(
+        item_instance = ItemInstance.objects.create(
             item=item,
             BeePocketID=beepocket,
             Lasteditedby=user,
             CreatedBy=user,
             expireon=expireon
         )
-        messages.success(
-            request, f'New "{item.item_name}" in "{beepocket}" instance created successfully')
+
+        if item.item_type == 'Adjustment':
+            approve_item_instance(request, item_instance.id)
+            messages.success(
+                request, f'Adjustment "{item.item_name}" in "{beepocket}" instance created and approved successfully'
+            )
+
+        else:
+            messages.success(
+                request, f'New "{item.item_name}" in "{beepocket}" instance created successfully'
+            )
+
         return redirect('create_item')
 
 
 @login_required
 def item_instances(request, beepocket_id):
     user = request.user
-    
+
     unread_comments_subquery = Comment.objects.filter(
-            ItemInstance=OuterRef('pk')
-        ).exclude(
-            commentreadstatus__user=user
-        ).values('pk')
-    
+        ItemInstance=OuterRef('pk')
+    ).exclude(
+        commentreadstatus__user=user
+    ).values('pk')
+
     item_instances = ItemInstance.objects.filter(BeePocketID=beepocket_id).annotate(
         comment_count=Count('comment'),
         has_unread_comments=Exists(unread_comments_subquery)
@@ -145,6 +155,7 @@ def approve_item_instance(request, instance_id):
     instance.Approved = True
     instance.ApprovedOn = timezone.now()
     instance.ActiveStatus = False
+    instance.ApprovedBy = request.user
     instance.save()
     messages.success(
         request, f'"{instance.item.item_name}" approved successfully')
@@ -188,7 +199,8 @@ def edit_item_instance(request, instance_id):
         instance.BeePocketID_id = request.POST['beepocket']
         instance.expireon = request.POST['expireon']
         instance.save()
-        messages.success(request, f'"{instance.item.item_name}" in "{beepocket}" updated successfully')
+        messages.success(
+            request, f'"{instance.item.item_name}" in "{beepocket}" updated successfully')
         return redirect('create_item')
     items = Item.objects.all()
     beepockets = BeePocket.objects.all()
@@ -205,5 +217,17 @@ def delete_item_instance(request, instance_id):
     instance = get_object_or_404(ItemInstance, id=instance_id)
     beepocket = get_object_or_404(BeePocket, id=instance.BeePocketID.id)
     instance.delete()
-    messages.success(request, f'"{instance.item.item_name}" in "{beepocket}" deleted successfully')
+    messages.success(
+        request, f'"{instance.item.item_name}" in "{beepocket}" deleted successfully')
     return redirect('create_item')
+
+@login_required
+def new_item_details(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    data = {
+        'description': item.item_description,
+        'category': item.item_category.category_name,
+        'type': item.item_type,
+        'value': item.item_value,
+    }
+    return JsonResponse(data)

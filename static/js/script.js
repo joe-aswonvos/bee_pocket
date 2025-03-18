@@ -68,18 +68,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Check if the type chosen is adjustment, then change value label
   const itemTypeSelect = document.getElementById("item_type");
-  if (itemTypeSelect) {
+  const itemValueInput = document.getElementById("item_value");
+
+  if (itemTypeSelect && itemValueInput) {
     itemTypeSelect.addEventListener("change", function () {
-      const itemValueLabel = document.getElementById("item_value_label");
       if (this.value === "Adjustment") {
-        itemValueLabel.textContent =
-          "Item Value (Adjustments can be positive or negative)";
+        itemValueInput.removeAttribute("min");
+        itemValueInput.setAttribute(
+          "placeholder",
+          "Enter a positive or negative integer"
+        );
       } else {
-        itemValueLabel.textContent =
-          "Item Value (Please enter a positive integer)";
+        itemValueInput.setAttribute("min", "1");
+        itemValueInput.setAttribute("placeholder", "Enter a positive integer");
       }
     });
   }
+
+  //Fetch and display item details when an item is selected in the create item instance modal
+  const newitemSelect = document.getElementById("select-item");
+  const newitemDetailsDiv = document.getElementById("item-details");
+  const newitemDescription = document.getElementById("select-item-description");
+  const newitemCategory = document.getElementById("select-item-category");
+  const newitemType = document.getElementById("select-item-type");
+  const newitemValue = document.getElementById("select-item-value");
+
+  if (newitemSelect) {
+    newitemSelect.addEventListener("change", function () {
+      const itemId = this.value;
+      console.log(itemId);
+      if (itemId) {
+        fetch(`/create/new_item_details/${itemId}/`)
+          .then(response => response.json())
+          .then(data => {
+            newitemDescription.textContent = data.description;
+            newitemCategory.textContent = data.category;
+            newitemType.textContent = data.type;
+            newitemValue.textContent = data.value;
+            newitemDetailsDiv.style.display = "block";
+          })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+          });
+      } else {
+        newitemDetailsDiv.style.display = "none";
+      }
+    });
+  }
+
 });
 
 function editComment(commentId) {
@@ -126,6 +162,14 @@ function showItemInstances(beepocketId) {
                             ? instance.item_name + " - APPROVED"
                             : instance.item_name
                         } 
+                        <span class="badge ${
+                          instance.has_unread_comments
+                            ? "text-warning"
+                            : "text-secondary"
+                        }">
+                        <span class="material-icons">comment</span>
+                        ${instance.comment_count}
+                        </span>
                       </a>
                     </h5>
                     <p class="card-text">Created By: ${instance.created_by}</p>
@@ -136,14 +180,6 @@ function showItemInstances(beepocketId) {
                     <p class="card-text">Approved: ${instance.approved}</p>
                   </div>
                   <div>
-                    <span class="badge ${
-                      instance.has_unread_comments
-                        ? "text-warning"
-                        : "text-secondary"
-                    }">
-                      <span class="material-icons">comment</span>
-                      ${instance.comment_count}
-                    </span>
                     <a href="/create/approve_item_instance/${
                       instance.id
                     }/" class="btn btn-success btn-sm ${

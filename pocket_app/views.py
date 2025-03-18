@@ -102,7 +102,6 @@ def calculate_balance(beepocket):
     approved_item_instances = ItemInstance.objects.filter(
         BeePocketID=beepocket,
         Approved=True,
-        ActiveStatus=True
     )
 
     # Calculate balance

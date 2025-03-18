@@ -15,7 +15,9 @@
 
         <div class="col-md-6 d-flex flex-column">
             <div class="d-flex flex-column mb-3">
-                <h3 class="text-center mb-4">Create an Item Template</h3>
+                <h3 class="text-center mb-4"><span class="material-symbols-outlined">
+                    looks_one
+                    </span> Create an Item Template</h3>
                 <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
                     <span class="material-icons me-2">add_circle</span> Create New Template
                 </button>            
@@ -57,7 +59,9 @@
         <!-- Item Instances Column -->
         <div class="col-md-6 d-flex flex-column">
             <div class="d-flex flex-column mb-3">
-                <h3 class="text-center mb-4">Add an Item to a Pocket</h3>
+                <h3 class="text-center mb-4"><span class="material-symbols-outlined">
+                    looks_two
+                    </span>Add an Item to a Pocket</h3>
                 <div class="row g-2 mb-2">
                     <div class="col-12 col-lg-4">
                         <label for="beepocket_select" class="form-label visually-hidden">Select BeePocket</label>
@@ -151,12 +155,21 @@
                 <form method="post" action="{% url 'create_item_instance' %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <label for="item" class="form-label">Item</label>
-                        <select class="form-select" id="item" name="item">
+                        <label for="select-item" class="form-label">Item</label>
+                        <select class="form-select" id="select-item" name="select-item">
                             {% for item in items %}
                                 <option value="{{ item.id }}">{{ item.item_name }}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    <div id="item-details" style="display: none;">
+                        <p><strong>Item Details</strong></p>
+                        <hr>
+                        <p><strong>Description:</strong> <span id="select-item-description"></span></p>
+                        <p><strong>Category:</strong> <span id="select-item-category"></span></p>
+                        <p><strong>Type:</strong> <span id="select-item-type"></span></p>
+                        <p><strong>Value:</strong> <span id="select-item-value"></span></p>
+                        <hr>
                     </div>
                     <div class="mb-3">
                         <label for="beepocket" class="form-label">BeePocket</label>
