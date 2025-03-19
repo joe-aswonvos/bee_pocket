@@ -193,10 +193,6 @@ function showItemInstances(beepocketId) {
                     </h5>
                     <p class="card-text">Created By: ${instance.created_by}</p>
                     <p class="card-text">Created On: ${instance.created_on}</p>
-                    <p class="card-text">Active Status: ${
-                      instance.active_status
-                    }</p>
-                    <p class="card-text">Approved: ${instance.approved}</p>
                   </div>
                   <div>
                     <a href="/create/approve_item_instance/${

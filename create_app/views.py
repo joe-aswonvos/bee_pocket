@@ -138,8 +138,6 @@ def item_instances(request, beepocket_id):
                 'item_name': instance.item.item_name,
                 'created_by': instance.CreatedBy.username,
                 'created_on': instance.CreatedOn.strftime('%Y-%m-%d %H:%M:%S'),
-                'active_status': instance.ActiveStatus,
-                'approved': instance.Approved,
                 'comment_count': instance.comment_count,
                 'has_unread_comments': instance.has_unread_comments
             }
