@@ -268,7 +268,7 @@
    flex: 1;
  }
 
- .scrolling {
+ .scrolling, #pollen-container, #honey-container, #sting-container {
   max-height: 400px;
   overflow-y: auto;
  }

@@ -268,8 +268,8 @@
    flex: 1;
  }
 
- .scrolling {
-  max-height: 400px;
+ .scrolling, #pollen-container, #honey-container, #sting-container {
+  max-height: 350px;
   overflow-y: auto;
  }
  
