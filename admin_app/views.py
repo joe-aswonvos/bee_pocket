@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from collections import defaultdict
 from .models import User, Account, BeePocket, UserPermission
 from .decorators import account_owner_required
 from pocket_app.utils import calculate_balance
@@ -17,19 +18,22 @@ def manage_account(request, account_id):
     permissions = UserPermission.objects.filter(account=account)
     beepockets = BeePocket.objects.filter(account=account)
     users = User.objects.all()
-    
-    #Calculate balance for each BeePocket
-    beepocket_balances = {beepocket.id: calculate_balance(beepocket) for beepocket in beepockets}
-    
-    # Calculate total balance
-    total_balance = sum(beepocket_balances.values())
+
+    # Calculate balance for each BeePocket and group by units
+    beepocket_balances = {}
+    unit_totals = defaultdict(int)
+    for beepocket in beepockets:
+        balance = calculate_balance(beepocket)
+        beepocket_balances[beepocket.id] = balance
+        if balance != 0:
+            unit_totals[beepocket.units] += balance
 
     context = {
         'account': account,
         'permissions': permissions,
         'beepockets': beepockets,
         'beepocket_balances': beepocket_balances,
-        'total_balance': total_balance,
+        'unit_totals': dict(unit_totals),
         'users': users,
     }
     return render(request, 'admin.html', context)
@@ -132,7 +136,8 @@ def edit_beepocket(request, account_id, beepocket_id):
         beepocket.units = request.POST['units']
         beepocket.starting_balance = request.POST['starting_balance']
         beepocket.save()
-        messages.success(request, f'BeePocket "{beepocket.beepocket_name}" updated successfully')
+        messages.success(
+            request, f'BeePocket "{beepocket.beepocket_name}" updated successfully')
         return redirect('manage_account', account_id=account_id)
     context = {
         'account': account,
@@ -149,5 +154,6 @@ def delete_beepocket(request, account_id, beepocket_id):
     """
     beepocket = get_object_or_404(BeePocket, id=beepocket_id)
     beepocket.delete()
-    messages.success(request, f'BeePocket "{beepocket.beepocket_name}" deleted successfully')
+    messages.success(
+        request, f'BeePocket "{beepocket.beepocket_name}" deleted successfully')
     return redirect('manage_account', account_id=account_id)

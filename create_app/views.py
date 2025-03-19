@@ -170,7 +170,6 @@ def edit_item(request, item_id):
         item.item_description = request.POST['item_description']
         item.item_category_id = request.POST['item_category']
         item.item_type = request.POST['item_type']
-        item.item_value = request.POST['item_value']
         item.save()
         messages.success(request, f'"{item.item_name}" updated successfully')
         return redirect('create_item')

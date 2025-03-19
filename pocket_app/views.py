@@ -64,7 +64,7 @@ def userpage(request):
         item_instances = ItemInstance.objects.filter(
             BeePocketID=selected_beepocket,
             Approved=show_approved,
-            ActiveStatus=True
+            ActiveStatus=not show_approved
         ).annotate(
             comment_count=Count('comment'),
             has_unread_comments=Exists(read_status_subquery)

@@ -32,10 +32,6 @@
                 <option value="Adjustment" {% if item.item_type == 'Adjustment' %}selected{% endif %}>Adjustment</option>
             </select>
         </div>
-        <div class="mb-3">
-            <label for="item_value" class="form-label">Item Value</label>
-            <input type="number" class="form-control" id="item_value" name="item_value" value="{{ item.item_value }}" required>
-        </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
     </form>
