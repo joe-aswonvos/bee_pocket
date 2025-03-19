@@ -149,6 +149,8 @@ The project is structured into several Django apps, each serving a specific purp
     *   `BeePocket`: Represents a virtual pocket money account.
     *   `UserPermission`: Defines permissions for users to access BeePockets.
 
+    <img src="assets/images/admin_deployed.webp" alt="Admin Deployed Screenshot" style="height: 300px;">
+
 ### landing
 
 *   **Purpose**: Handles the landing page for the application, specifically for unregistered users. Displays marketing content to unauthenticated users and redirects authenticated users to their appropriate dashboard.
@@ -171,6 +173,9 @@ The project is structured into several Django apps, each serving a specific purp
     *   `edit_item_instance`: Edits an existing item instance.
     *   `delete_item_instance`: Deletes an existing item instance.
 
+    <img src="assets/images/create_deployed.webp" alt="Create Deployed Screenshot" style="height: 300px;">
+
+
 ### pocket\_app
 
 *   **Purpose**: Provides the Bee-Pocket User dashboard for managing BeePockets and viewing item instances.
@@ -180,6 +185,9 @@ The project is structured into several Django apps, each serving a specific purp
 *   **Views**:
     *   `userpage`: Renders the user dashboard, displaying BeePockets, item instances, and balances.
     *   `item_detail`: Displays details for a specific item instance and allows users to add comments.
+
+    <img src="assets/images/pocket_deployed.webp" alt="Pocket Deployed Screenshot" style="height: 300px;">
+
 
 ## Features
 
