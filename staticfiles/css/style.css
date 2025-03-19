@@ -5,305 +5,332 @@
 /* ====================================
  * 1. IMPORTS AND VARIABLES
  * ==================================== */
- @import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
- :root {
-   /* Typography */
-   --primary-font: "DynaPuff", cursive;
-   --secondary-font: "Roboto", sans-serif;
- 
-   /* Color palette */
-   --primary-color: #f4be25;    /* Yellow - accent color */
-   --secondary-color: #616161;  /* Dark gray - backgrounds */
-   --tertiary-color: #bfbfc1;   /* Light gray - tertiary elements */
-   --contrast-color: #eeeeee;   /* Off-white - content areas */
- 
-   /* RGB values for opacity variants */
-   --primary-color-rgb: 244, 190, 37;
-   --secondary-color-rgb: 97, 97, 97;
-   --tertiary-color-rgb: 191, 191, 193;
-   --contrast-color-rgb: 238, 238, 238;
- 
-   /* Z-index stacking hierarchy */
-   --z-background: -2;
-   --z-overlay: -1;
-   --z-content: 1;
-   --z-header: 10;
-   --z-footer: 10;
-   --z-modal-backdrop: 11;
-   --z-modal: 1060;
- }
- 
- /* ====================================
+:root {
+  /* Typography */
+  --primary-font: "DynaPuff", cursive;
+  --secondary-font: "Roboto", sans-serif;
+
+  /* Color palette */
+  --primary-color: #f4be25; /* Yellow - accent color */
+  --secondary-color: #616161; /* Dark gray - backgrounds */
+  --tertiary-color: #bfbfc1; /* Light gray - tertiary elements */
+  --contrast-color: #eeeeee; /* Off-white - content areas */
+
+  /* RGB values for opacity variants */
+  --primary-color-rgb: 244, 190, 37;
+  --secondary-color-rgb: 97, 97, 97;
+  --tertiary-color-rgb: 191, 191, 193;
+  --contrast-color-rgb: 238, 238, 238;
+
+  /* Z-index stacking hierarchy */
+  --z-background: -2;
+  --z-overlay: -1;
+  --z-content: 1;
+  --z-header: 10;
+  --z-footer: 10;
+  --z-modal-backdrop: 11;
+  --z-modal: 1060;
+}
+
+/* ====================================
   * 2. BASE STYLES
   * ==================================== */
- body {
-   font-family: var(--secondary-font);
-   color: var(--secondary-color);
-   background-color: var(--tertiary-color);
-   position: relative;
- }
- 
- /* Typography base styles */
- h1, h2, h3 {
-   font-family: var(--primary-font);
- }
+body {
+  font-family: var(--secondary-font);
+  color: var(--secondary-color);
+  background-color: var(--tertiary-color);
+  position: relative;
+}
 
- .primary-color {
-   color: var(--primary-color);
-   text-shadow: var(--secondary-color) 1px 0 10px;
- }
- 
- /* Background image with fixed attachment */
- body::before {
-   content: "";
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-image: url("../images/background_img.webp");
-   background-position: center;
-   background-attachment: fixed; 
-   background-repeat: no-repeat;
-   background-size: cover;
-   z-index: var(--z-background);
- }
- @supports not (background-attachment: fixed) {
-    body::before {
-      position: absolute;
-      background-attachment: scroll;
-    }
+/* Typography base styles */
+h1,
+h2,
+h3 {
+  font-family: var(--primary-font);
+}
+
+.primary-color {
+  font-family: var(--primary-font);
+  color: var(--primary-color);
+  text-shadow: var(--secondary-color) 2px 2px 15px;
+}
+
+/* Background image with fixed attachment */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../images/background_img.webp");
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: var(--z-background);
+}
+@supports not (background-attachment: fixed) {
+  body::before {
+    position: absolute;
+    background-attachment: scroll;
   }
- 
- /* Semi-transparent overlay */
- body::after {
-   content: "";
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-color: var(--secondary-color);
-   opacity: 0.4;
-   z-index: var(--z-overlay);
- }
- 
- /* ====================================
+}
+
+/* Semi-transparent overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary-color);
+  opacity: 0.4;
+  z-index: var(--z-overlay);
+}
+
+/* ====================================
   * 3. LAYOUT AND CONTAINERS
   * ==================================== */
- /* Main content container with backdrop blur */
+/* Main content container with backdrop blur */
 
- .content-container {
-   background-color: rgba(var(--contrast-color-rgb), 0.6);
-   border-radius: 8px;
-   padding: 20px;
-   margin: 20px auto;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   max-width: 95%;
-   backdrop-filter: blur(3px); /* Cross-browser issue: Not supported in Firefox without flag */
-   -webkit-backdrop-filter: blur(3px); /* Vendor prefix for Safari support */
-   border: 1px solid rgba(255, 255, 255, 0.2);
-   z-index: var(--z-content);
- }
- 
- /* My Pockets containers */
+.content-container {
+  background-color: rgba(var(--contrast-color-rgb), 0.6);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 95%;
+  backdrop-filter: blur(
+    3px
+  ); /* Cross-browser issue: Not supported in Firefox without flag */
+  -webkit-backdrop-filter: blur(3px); /* Vendor prefix for Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: var(--z-content);
+}
 
-  #sting-container, #pollen-container, #honey-container {
-    min-height: 181px;
-  }
+/* My Pockets containers */
 
- /* ====================================
+#sting-container,
+#pollen-container,
+#honey-container {
+  min-height: 181px;
+}
+
+/* ====================================
   * 4. HEADER AND NAVIGATION
   * ==================================== */
- header {
-   background: linear-gradient(
-     to right,
-     var(--secondary-color),
-     var(--tertiary-color),
-     var(--secondary-color)
-   );
-   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-   color: var(--primary-color);
-   position: relative;
-   z-index: var(--z-header);
-   border-bottom: 2px solid var(--primary-color);
- }
- 
- /* Header pattern overlay */
- header::before {
-   content: "";
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill-opacity='.05'/%3E%3C/svg%3E");
-   opacity: 0.2;
-   z-index: -1;
- }
- 
- /* Navbar elements */
- .navbar * {
-   font-family: var(--primary-font);
-   color: var(--primary-color);
- }
- 
- /* Navbar links with subtle glow effect */
- .navbar-brand, .nav-link {
-   text-shadow: 0 0 5px rgba(244, 190, 37, 0.3);
-   transition: all 0.3s ease;
- }
- 
- .navbar-brand:hover, .nav-link:hover {
-   text-shadow: 0 0 8px rgba(244, 190, 37, 0.6);
- }
- 
- /* ====================================
+header {
+  background: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--tertiary-color),
+    var(--secondary-color)
+  );
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  color: var(--primary-color);
+  position: relative;
+  z-index: var(--z-header);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Header pattern overlay */
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill-opacity='.05'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  z-index: -1;
+}
+
+/* Navbar elements */
+.navbar * {
+  font-family: var(--primary-font);
+  color: var(--primary-color);
+}
+
+/* Navbar links with subtle glow effect */
+.navbar-brand,
+.nav-link {
+  text-shadow: 0 0 5px rgba(244, 190, 37, 0.3);
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+  text-shadow: 0 0 8px rgba(244, 190, 37, 0.6);
+}
+
+.major-btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  font-family: var(--primary-font);
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 4px rgba(var(--secondary-color-rgb), 0.3);
+}
+
+.major-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+/* ====================================
   * 5. FOOTER STYLING
   * ==================================== */
- footer {
-   position: relative;
-   background: var(--secondary-color);
-   color: var(--primary-color);
-   font-family: var(--primary-font);
-   padding-top: 20px;
-   z-index: var(--z-footer);
-   border-top: 2px solid var(--primary-color);
- }
+footer {
+  position: relative;
+  background: var(--secondary-color);
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  padding-top: 20px;
+  z-index: var(--z-footer);
+  border-top: 2px solid var(--primary-color);
+}
 
- .footer-icon {
-   color: var(--primary-color);
-   text-decoration: none;
- }
+.footer-icon {
+  color: var(--primary-color);
+  text-decoration: none;
+}
 
- .footer-icon:hover {
-   color: var(--tertiary-color);
- }
- 
- /* Wave pattern above footer */
- footer::before {
-   content: "";
-   position: absolute;
-   top: -15px;
-   left: 0;
-   width: 100%;
-   height: 15px;
-   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C0,0,0,.02,0,120Z' fill='%23616161'/%3E%3C/svg%3E");
-   background-size: cover;
- }
+.footer-icon:hover {
+  color: var(--tertiary-color);
+}
 
- /* Toast Styling */
+/* Wave pattern above footer */
+footer::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C0,0,0,.02,0,120Z' fill='%23616161'/%3E%3C/svg%3E");
+  background-size: cover;
+}
 
-  .toast-header {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    font-family: var(--primary-font);
-    font-weight: bold;  
- 
-  }
-  
-  .toast-body {
-    background-color: rgba(var(--contrast-color-rgb), 0.9);
-    color: var(--secondary-color);
-    font-family: var(--secondary  -font);
-    padding: 10px;
-    border-radius: 5px;
-  }
+/* Toast Styling */
 
-  .toast {
-    border: 1px solid rgba(var(--tertiary-color-rgb), 0.5);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    margin: 10px 0;
-  }
+.toast-header {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-family: var(--primary-font);
+  font-weight: bold;
+}
 
- /* ====================================
+.toast-body {
+  background-color: rgba(var(--contrast-color-rgb), 0.9);
+  color: var(--secondary-color);
+  font-family: var(--secondary -font);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.toast {
+  border: 1px solid rgba(var(--tertiary-color-rgb), 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+}
+
+/* ====================================
   * 6. CARD COMPONENTS
   * ==================================== */
- /* Base card structure */
- .card {
-   border: 1px solid rgba(var(--tertiary-color-rgb), 0.5);
-   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-   display: flex;
-   flex-direction: column;
-   overflow: hidden; /* Contains scrolling content */
- }
- 
- /* Card headers with sticky positioning */
- .card-header {
-   position: sticky;
-   top: 0;
-   z-index: 5;
-   background-color: var(--secondary-color);
-   color: var(--primary-color);
-   font-family: var(--primary-font);
-   font-weight: bold;
-   padding: 10px 15px;
-   border-bottom: 2px solid var(--primary-color);
- }
- 
- /* Shadow indicating scrollable content */
- .card-header::after {
-   content: "";
-   position: absolute;
-   left: 0;
-   right: 0;
-   bottom: -5px;
-   height: 5px;
-   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
-   pointer-events: none;
- }
- 
- /* Semi-transparent card bodies */
- .card-body  {
-   background-color: rgba(var(--contrast-color-rgb), 0.6);
-   padding: 15px;
-   position: relative;
- }
- 
- /* Scrollable card content */
- .card > .card-body {
-   overflow-y: auto;
-   max-height: inherit;
-   flex: 1;
- }
+/* Base card structure */
+.card {
+  border: 1px solid rgba(var(--tertiary-color-rgb), 0.5);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Contains scrolling content */
+}
 
- .scrolling, #pollen-container, #honey-container, #sting-container {
-  max-height: 400px;
+/* Card headers with sticky positioning */
+.card-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  font-weight: bold;
+  padding: 10px 15px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Shadow indicating scrollable content */
+.card-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 5px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent);
+  pointer-events: none;
+}
+
+/* Semi-transparent card bodies */
+.card-body {
+  background-color: rgba(var(--contrast-color-rgb), 0.6);
+  padding: 15px;
+  position: relative;
+}
+
+/* Scrollable card content */
+.card > .card-body {
   overflow-y: auto;
- }
- 
- /* Custom scrollable area background */
- .myscrollable {
-   background-color: rgba(var(--primary-color-rgb), 0.1);
- }
+  max-height: inherit;
+  flex: 1;
+}
 
- /* Custom scrollbar styles */
+.scrolling,
+#pollen-container,
+#honey-container,
+#sting-container {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/* Custom scrollable area background */
+.myscrollable {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+}
+
+/* Custom scrollbar styles */
 .card-body::-webkit-scrollbar {
-    width: 8px;
-  }
-  .card-body::-webkit-scrollbar-track {
-    background: rgba(var(--tertiary-color-rgb), 0.3);
-  }
-  .card-body::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 4px;
-  }
+  width: 8px;
+}
+.card-body::-webkit-scrollbar-track {
+  background: rgba(var(--tertiary-color-rgb), 0.3);
+}
+.card-body::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
 
-  /* Select item on BeePocket Page */
+/* Select item on BeePocket Page */
 
-  #beepocket-selector, .bee-pocket-selector {
-    background-color: rgba(var(--primary-color-rgb), 0.1);
-    border: none;
-    border-radius: 0;
-    padding: 10px;
-  }
+#beepocket-selector,
+.bee-pocket-selector {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border: none;
+  border-radius: 0;
+  padding: 10px;
+}
 
- 
- /* ====================================
+/* ====================================
   * 7. CARD LIST ITEMS
   * ==================================== */
- /* Individual items within card bodies */
+/* Individual items within card bodies */
 .card-body .d-flex:not(.simple) {
   background-color: rgba(var(--contrast-color-rgb), 0.8);
   border-left: 3px solid var(--primary-color);
@@ -313,30 +340,30 @@
   transition: all 0.2s ease-in-out;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
- 
- /* Hover effect for card items */
+
+/* Hover effect for card items */
 .card-body .d-flex:not(.simple):hover {
   background-color: rgba(var(--primary-color-rgb), 0.1);
   transform: translateX(3px);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
- 
- /* Card content typography */
- .card-body .card-title {
-   color: var(--secondary-color);
-   font-size: 1.1rem;
-   margin-bottom: 8px;
- }
- 
- .card-body .card-text {
-   color: var(--secondary-color);
-   margin-bottom: 4px;
-   font-size: 0.9rem;
- }
 
- /* MyPockets Card styling */
+/* Card content typography */
+.card-body .card-title {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
 
- .item-card .description {
+.card-body .card-text {
+  color: var(--secondary-color);
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+/* MyPockets Card styling */
+
+.item-card .description {
   display: none;
 }
 
@@ -379,76 +406,81 @@
   background-color: var(--tertiary-color);
   border-color: var(--tertiary-color);
 }
- 
- /* ====================================
+
+/* ====================================
   * 8. MODAL COMPONENTS
   * ==================================== */
- /* Fixed z-index for modals to appear above overlays */
- .modal-backdrop {
-   z-index: var(--z-modal-backdrop);
-   pointer-events: none; 
- }
- 
- .modal-dialog, .modal-content, .modal-header, .modal-body, .modal-footer, .modal {
-   z-index: var(--z-modal);
-   pointer-events: auto;
- }
- 
- /* ====================================
+/* Fixed z-index for modals to appear above overlays */
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop);
+  pointer-events: none;
+}
+
+.modal-dialog,
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer,
+.modal {
+  z-index: var(--z-modal);
+  pointer-events: auto;
+}
+
+/* ====================================
   * 9. MATERIAL DESIGN BUTTONS
   * ==================================== */
- /* Size and alignment for material icons in buttons */
- .btn .material-icons {
-   font-size: 1rem;
-   line-height: 1;
-   vertical-align: middle;
- }
- 
- /* Circular action buttons */
- .btn-sm.btn-danger,
- .btn-sm.btn-warning,
- .btn-sm.btn-success {
-   width: 32px;
-   height: 32px;
-   border-radius: 50%;
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   margin: 0 2px;
-   padding: 0;
- }
- 
- /* Icon hover animation */
- .material-icons {
-   transition: transform 0.2s ease;
- }
- 
- .btn:hover .material-icons {
-   transform: scale(1.2);
- }
- 
- /* ====================================
+/* Size and alignment for material icons in buttons */
+.btn .material-icons {
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* Circular action buttons */
+.btn-sm.btn-danger,
+.btn-sm.btn-warning,
+.btn-sm.btn-success {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2px;
+  padding: 0;
+}
+
+/* Icon hover animation */
+.material-icons {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .material-icons {
+  transform: scale(1.2);
+}
+
+/* ====================================
   * 10. RESPONSIVE DESIGNS
   * ==================================== */
- /* Medium devices (tablets) */
- @media (min-width: 768px) {
-   .content-container {
-     max-width: 90%;
-   }
- }
- 
- /* Large devices (desktops) */
- @media (min-width: 992px) {
-   .content-container {
-     max-width: 80%;
-   }
- }
-
- @media (prefers-reduced-motion: reduce) {
-    .btn:hover .material-icons {
-      transform: none;
-    }
-    .card-body .d-flex:hover {
-      transform: none;
-    }
+/* Medium devices (tablets) */
+@media (min-width: 768px) {
+  .content-container {
+    max-width: 90%;
   }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .content-container {
+    max-width: 80%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover .material-icons {
+    transform: none;
+  }
+  .card-body .d-flex:hover {
+    transform: none;
+  }
+}

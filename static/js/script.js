@@ -99,23 +99,26 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(itemId);
       if (itemId) {
         fetch(`/create/new_item_details/${itemId}/`)
-          .then(response => response.json())
-          .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             newitemDescription.textContent = data.description;
             newitemCategory.textContent = data.category;
             newitemType.textContent = data.type;
             newitemValue.textContent = data.value;
             newitemDetailsDiv.style.display = "block";
           })
-          .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
           });
       } else {
         newitemDetailsDiv.style.display = "none";
       }
+      updateUnitSymbol();
     });
   }
-
 });
 
 function editComment(commentId) {
@@ -132,6 +135,22 @@ function cancelEdit(commentId) {
   document
     .getElementById(`edit-comment-form-${commentId}`)
     .classList.add("d-none");
+}
+
+function updateUnitSymbol() {
+  const beepocketSelect = document.getElementById("beepocket");
+  const unitSymbol = document.getElementById("unit-symbol");
+  const selectedOption = beepocketSelect.options[beepocketSelect.selectedIndex];
+  const units = selectedOption.getAttribute("data-units");
+
+  const unitSymbols = {
+    GBP: "£",
+    EUR: "€",
+    USD: "$",
+    "non-currency": "",
+  };
+
+  unitSymbol.textContent = unitSymbols[units] || "";
 }
 
 function showItemInstances(beepocketId) {

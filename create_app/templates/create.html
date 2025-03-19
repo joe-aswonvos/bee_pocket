@@ -18,7 +18,7 @@
                 <h3 class="text-center mb-4"><span class="material-symbols-outlined">
                     looks_one
                     </span> Create an Item Template</h3>
-                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#createItemModal">
+                <button class="btn btn-primary w-100 mb-2 major-btn" data-bs-toggle="modal" data-bs-target="#createItemModal">
                     <span class="material-icons me-2">add_circle</span> Create New Template
                 </button>            
             </div>
@@ -73,7 +73,7 @@
                         </select>
                     </div>
                     <div class="col-12 col-lg-8">
-                        <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">
+                        <button class="btn btn-success w-100 major-btn" data-bs-toggle="modal" data-bs-target="#createItemInstanceModal">
                             <span class="material-icons me-2">add_circle</span> Create New Item
                     </div>
                 </div>
@@ -96,7 +96,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createItemModalLabel">Create New Item</h5>
+                <h3 class="modal-title" id="createItemModalLabel">Create Template</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -136,7 +136,7 @@
                         <label for="item_value" class="form-label" id="item_value_label">Item Value (Please enter a positive integer)</label>
                         <input type="number" class="form-control" id="item_value" name="item_value" required min="1">
                     </div>
-                    <button type="submit" class="btn btn-primary">Create Item</button>
+                    <button type="submit" class="btn btn-primary major-btn">Create Template</button>
                 </form>
             </div>
         </div>
@@ -148,7 +148,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createItemInstanceModalLabel">Create New Item Instance</h5>
+                <h3 class="modal-title" id="createItemInstanceModalLabel">Add Item</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -168,14 +168,14 @@
                         <p><strong>Description:</strong> <span id="select-item-description"></span></p>
                         <p><strong>Category:</strong> <span id="select-item-category"></span></p>
                         <p><strong>Type:</strong> <span id="select-item-type"></span></p>
-                        <p><strong>Value:</strong> <span id="select-item-value"></span></p>
+                        <p><strong>Value:</strong> <span id="unit-symbol"></span><span id="select-item-value"></span></p>
                         <hr>
                     </div>
                     <div class="mb-3">
                         <label for="beepocket" class="form-label">BeePocket</label>
-                        <select class="form-select" id="beepocket" name="beepocket">
+                        <select class="form-select" id="beepocket" name="beepocket" onchange="updateUnitSymbol()">
                             {% for beepocket in beepockets %}
-                                <option value="{{ beepocket.id }}" {% if default_beepocket and default_beepocket.id == beepocket.id %}selected{% endif %}>{{ beepocket.beepocket_name }}</option>
+                                <option value="{{ beepocket.id }}" data-units="{{ beepocket.units }}" {% if default_beepocket and default_beepocket.id == beepocket.id %}selected{% endif %}>{{ beepocket.beepocket_name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -183,7 +183,7 @@
                         <label for="expireon" class="form-label">Expire On (default 24 hours)</label>
                         <input type="datetime-local" class="form-control" id="expireon" name="expireon" required>
                     </div>
-                    <button type="submit" class="btn btn-success">Create ItemInstance</button>
+                    <button type="submit" class="btn btn-success major-btn">Add Item</button>
                 </form>
             </div>
         </div>
