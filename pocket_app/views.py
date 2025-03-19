@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, OuterRef, Subquery, Exists
 from admin_app.models import Account
 from pocket_app.models import BeePocket, ItemInstance, Comment, CommentReadStatus
+from .utils import calculate_balance
 
 
 @login_required
@@ -90,34 +91,6 @@ def userpage(request):
     }
 
     return render(request, 'pocket.html', context)
-
-
-def calculate_balance(beepocket):
-    if not beepocket:
-        return 0
-
-    balance = beepocket.starting_balance
-
-    # Get all approved item instances for this BeePocket for balance calculation
-    approved_item_instances = ItemInstance.objects.filter(
-        BeePocketID=beepocket,
-        Approved=True,
-    )
-
-    # Calculate balance
-    for item in approved_item_instances:
-        if item.item.item_type == 'Task':  # Pollen/Task (positive)
-            balance += item.item.item_value
-        # Sting/Consequence (negative)
-        elif item.item.item_type == 'Consequence':
-            balance -= item.item.item_value
-        elif item.item.item_type == 'Reward':  # Honey/Reward (negative)
-            balance -= item.item.item_value
-        elif item.item.item_type == 'Adjustment':
-            balance += item.item.item_value
-
-    return balance
-
 
 @login_required
 def item_detail(request, item_id):

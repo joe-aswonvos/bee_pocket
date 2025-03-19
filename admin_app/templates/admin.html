@@ -56,7 +56,11 @@
             
             <div class="card mb-3 myscrollable scrolling">
                 <div class="card-header">
-                    BeePockets
+                    BeePockets - (Total: 
+                    {% if beepockets.0.units == 'GBP' %}£{% endif %}
+                    {% if beepockets.0.units == 'EUR' %}€{% endif %}
+                    {% if beepockets.0.units == 'USD' %}${% endif %}
+                    {{ total_balance }})
                 </div>
                 <div class="card-body">
                     {% for beepocket in beepockets %}
@@ -69,6 +73,11 @@
                                     {% if beepocket.units == 'EUR' %}€{% endif %}
                                     {% if beepocket.units == 'USD' %}${% endif %}
                                     {{ beepocket.starting_balance }}</p>
+                                <p class="card-text">Current Balance:
+                                    {% if beepocket.units == 'GBP' %}£{% endif %}
+                                    {% if beepocket.units == 'EUR' %}€{% endif %}
+                                    {% if beepocket.units == 'USD' %}${% endif %}
+                                    {{ beepocket_balances|default_if_none:0|dict_get:beepocket.id }}</p>
                             </div>
                             <div>
                                 <a href="{% url 'edit_beepocket' account.id beepocket.id %}" class="btn btn-warning btn-sm" title="Edit">

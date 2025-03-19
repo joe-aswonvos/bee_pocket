@@ -289,6 +289,16 @@
     background-color: var(--primary-color);
     border-radius: 4px;
   }
+
+  /* Select item on BeePocket Page */
+
+  #beepocket-selector, .bee-pocket-selector {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+  }
+
  
  /* ====================================
   * 7. CARD LIST ITEMS

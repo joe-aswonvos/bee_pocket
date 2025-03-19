@@ -33,3 +33,7 @@ def has_instances(item):
 @register.filter
 def pocket_has_instances(beepocket):
     return ItemInstance.objects.filter(BeePocketID=beepocket, ActiveStatus=True).exists()
+
+@register.filter
+def dict_get(dictionary, key):
+    return dictionary.get(key)

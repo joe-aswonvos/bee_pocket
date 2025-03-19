@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import User, Account, BeePocket, UserPermission
 from .decorators import account_owner_required
+from pocket_app.utils import calculate_balance
 
 
 @login_required
@@ -16,11 +17,19 @@ def manage_account(request, account_id):
     permissions = UserPermission.objects.filter(account=account)
     beepockets = BeePocket.objects.filter(account=account)
     users = User.objects.all()
+    
+    #Calculate balance for each BeePocket
+    beepocket_balances = {beepocket.id: calculate_balance(beepocket) for beepocket in beepockets}
+    
+    # Calculate total balance
+    total_balance = sum(beepocket_balances.values())
 
     context = {
         'account': account,
         'permissions': permissions,
         'beepockets': beepockets,
+        'beepocket_balances': beepocket_balances,
+        'total_balance': total_balance,
         'users': users,
     }
     return render(request, 'admin.html', context)
