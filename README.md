@@ -2,7 +2,7 @@
 
 # Bee Pocket
 
-The repository for my Code Institute Bootcamp capstone project.
+The repository for my Code Institute Bootcamp capstone project, after 14 weeks of learning HTML, CSS, JS and Python.
 
 ## Table of Contents
 
