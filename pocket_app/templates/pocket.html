@@ -98,9 +98,9 @@
                 </span>
               </div>
               {% if item.Approved %}
-              <span class="text-muted small">Completed: {{ item.ApprovedOn|date:"M d, Y" }}</span>
+              <span class="text-muted small">Completed: {{ item.ApprovedOn|date:"d M, Y" }}</span>
               {% else %}
-              <span class="text-muted small">Complete by: {{ item.expireon|date:"M d, Y" }}</span>
+              <span class="text-muted small">Complete by: {{ item.expireon|date:"d M, Y" }}</span>
               {% endif %}
               <p class="card-text text-muted small description">{{ item.item.item_description }}</p>
             </div>
@@ -143,9 +143,9 @@
                     </span>
                   </div>
                   {% if item.Approved %}
-                    <span class="text-muted small">Received: {{ item.ApprovedOn|date:"M d, Y" }}</span>
+                    <span class="text-muted small">Received: {{ item.ApprovedOn|date:"d M, Y" }}</span>
                   {% else %}
-                    <span class="text-muted small">Expires: {{ item.expireon|date:"M d, Y" }}</span>
+                    <span class="text-muted small">Expires: {{ item.expireon|date:"d M, Y" }}</span>
                   {% endif %}
                   <p class="card-text text-muted small description">{{ item.item.item_description }}</p>
                 </div>
@@ -188,9 +188,9 @@
                   </span>
                 </div>
                 {% if item.Approved %}
-                  <span class="text-muted small">Received: {{ item.ApprovedOn|date:"M d, Y" }}</span>
+                  <span class="text-muted small">Received: {{ item.ApprovedOn|date:"d M, Y" }}</span>
                 {% else %}
-                  <span class="text-muted small">Expires: {{ item.expireon|date:"M d, Y" }}</span>
+                  <span class="text-muted small">Expires: {{ item.expireon|date:"d M, Y" }}</span>
                 {% endif %}
                 <div class="d-flex simple justify-content-between align-items-center mt-2">
                   <span class="text-muted small description">{{ item.item.item_description }}</span>
@@ -213,7 +213,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Enhance double-click behavior
+  // Enhance click behavior
   const itemCards = document.querySelectorAll('.item-card');
   itemCards.forEach(card => {
     card.addEventListener('click', function() {
