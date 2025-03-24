@@ -299,6 +299,14 @@ The application is deployed on Heroku [here](https://joe-aswonvos-bee-pockets-74
 * The repository is held on GitHub and Heroku deploys the latest version of the main branch
 * Heroku settings contain all the relevant secret keys for the project to remain secure.
 
+## Use of AI
+
+Throughout the development process, GitHub Copilot was utilized to assist in writing and testing code. Copilot provided code suggestions and snippets, which were carefully reviewed and understood before being integrated into the project. This ensured that the code met the project's requirements and maintained high quality.
+
+Additionally, images and backgrounds used in the project were created using Microsoft Copilot and Leonardo.ai. These tools helped generate visually appealing and thematically consistent assets, enhancing the overall user experience.
+
+AI represents a powerful weapon in the armoury of a developer, enabling dialogue to query code, understand error messages and find out why stuff isn't working.
+
 ## Future Enhancements
 
 *   Implement automatic generation of item instances based on repeatability settings.
