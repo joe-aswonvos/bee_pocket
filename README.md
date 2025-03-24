@@ -16,19 +16,26 @@ The repository for my Code Institute Bootcamp capstone project, after 14 weeks o
     *   [Admin Page](#admin-page)
     *   [Create Page](#create-page)
     *   [Pocket Page](#pocket-page)
-7.  [DataBase Design](#database-design)
-8.  [Application Breakdown](#application-breakdown)
+7.  [Creative Design Decisions](#creative-design-decisions)
+8.  [DataBase Design](#database-design)
+9.  [Application Breakdown](#application-breakdown)
     *   [admin\_app](#admin_app)
     *   [landing](#landing)
     *   [create\_app](#create_app)
     *   [pocket\_app](#pocket_app)
-9.  [Features](#features)
-10.  [Agile Methodology](#agile-methodology)
-11.  [Project Board](#project-board)
-12.  [Testing](#testing)
-13.  [Deployment](#deployment)
-14.  [Future Enhancements](#future-enhancements)
-15.  [Credits](#credits)
+10.  [Features](#features)
+11.  [Agile Methodology](#agile-methodology)
+12.  [Project Board](#project-board)
+13.  [Testing](#testing)
+    *   [Initial Testing](#initial-testing)
+        *   [Lighthouse Report](#lighthouse-report)
+            *   [Mobile](#mobile)
+            *   [Desktop](#desktop)
+        *   [CSS Testing (W3C)](#css-testing-w3c)
+        *   [HTML Testing (W3C)](#html-testing-w3c)
+14.  [Deployment](#deployment)
+15.  [Future Enhancements](#future-enhancements)
+16.  [Credits](#credits)
 
 ## Project Overview
 
@@ -137,6 +144,22 @@ Wireframe mockups were drawn on ReMarkable to give design direction.
 
 <img src="assets/images/pocket_screenshot.webp" alt="Pocket Page Wireframe" style="height: 300px;">
 
+## Creative Design Decisions
+
+The theme of the project is unsurprisingly bees, the language aligns with this (honey, hive, buzz etc.)
+
+The colour-scheme was selected to reflect this, with the primary colour of yellow, a secondary dark gray and some lighter shades of gray for highlights and to act as a background for the secondary coloured text.
+
+Contrast of the primary/secondary was suitable for accesibility.
+
+<img src="assets/images/beepocket_contrast_check.webp" alt="Colour Scheme Contrast" style="height: 300px;">
+
+Fonts were selected from Google Fonts, a primary font in keeping with the friendly, natural and cartoonish nature of the theme, with a clear, readable secondary font.
+
+<img src="assets/images/font_selection.webp" alt="Google fonts screenshot" style="height: 300px">
+
+Bootstrap elements were used for convenience & Google Material Design icons were chosen due to their simplicity and as they represent a common standard in user experience.
+
 ## DataBase Design
 
 The design and interaction of the models was done prior to coding in anger.
@@ -146,6 +169,8 @@ The design and interaction of the models was done prior to coding in anger.
 ## Application Breakdown
 
 The project is structured into several Django apps, each serving a specific purpose and aligned with the user roles above:
+
+The final pages reflect the UX goals of the wireframes, if not being exact carbon copies, this reflects the focus being on delivery of the functionality required in the user-stories and the broad project design principles.
 
 ### admin\_app
 
@@ -234,7 +259,37 @@ Testing is an integral part of the development process to ensure the application
 *   **Integration Testing**: Testing the interaction between different components.
 *   **Automated Testing**: Using tools to automate repetitive testing tasks. A number of straightforward automated tests of the CRUD functionality have been set up, to ensure that the appropriate records can be created, edited and deleted, in line with the functional views undertaking these actions.
 
-Code Testing
+### Initial Testing
+
+#### Lighthouse Report
+
+Lighthouse testing of performance, accessibility and best practice have been performed for both Mobile and Desktop, as this is the MVP of the project, the goal is to have no major issues on performance, accesibility or best practice:
+
+##### Mobile
+
+<img src="assets/images/lighthouse_account_mobile.webp" alt="Pocket Deployed Account Page Mobile Lighthouse" style="height: 300px;">
+
+<img src="assets/images/lighthouse_pocket_mobile.webp" alt="Pocket Deployed Pocket Page Mobile Lighthouse" style="height: 300px;">
+
+While not as fast to render as on the desktop, the scores are acceptable.
+
+##### Desktop
+
+<img src="assets/images/lighthouse_account.webp" alt="Pocket Deployed Account Page Lighthouse" style="height: 300px;">
+
+<img src="assets/images/lighthouse_pocket.webp" alt="Pocket Deployed Pocket Page Lighthouse" style="height: 300px;">
+
+The site loads quickly on desktop with acceptable scores.
+
+#### CSS Testing (W3C)
+
+I hadn't anticipated any issues with the code testing, however the CSS report highlighted a typo, with an inadvertant space in font-family: var(--secondary -font); which was a straightforward fix
+
+<img src="assets/images/css_validation.webp" alt="CSS Validation" style="height: 100px">
+
+#### HTML Testing (W3C)
+
+On testing a couple of issues identified with rogue syntax elements, some duplicated "'s, this is likely due to the lack of an appropriate Django linting plugin in VS Code - I've been testing the use of the PyCharm IDE for future Django projects as it appears to offer more 'out of the box' support.
 
 ## Deployment
 
