@@ -257,7 +257,7 @@ Testing is an integral part of the development process to ensure the application
 
 *   **Unit Testing**: Testing individual components and functions - this was conducted throughout development, to ensure everything worked, before moving onto the next user story.
 *   **Integration Testing**: Testing the interaction between different components.
-*   **Automated Testing**: Using tools to automate repetitive testing tasks. A number of straightforward automated tests of the CRUD functionality have been set up, to ensure that the appropriate records can be created, edited and deleted, in line with the functional views undertaking these actions.
+*   **Automated Testing**: Using tools to automate repetitive testing tasks. A number of straightforward automated tests of the CRUD functionality have been set up with the assistance of Copilot, to ensure that the appropriate records can be created, edited and deleted, in line with the functional views undertaking these actions.
 
 ### Initial Testing
 
@@ -305,7 +305,7 @@ Throughout the development process, GitHub Copilot was utilized to assist in wri
 
 Additionally, images and backgrounds used in the project were created using Microsoft Copilot and Leonardo.ai. These tools helped generate visually appealing and thematically consistent assets, enhancing the overall user experience.
 
-AI represents a powerful weapon in the armoury of a developer, enabling dialogue to query code, understand error messages and find out why stuff isn't working.
+AI represents a powerful weapon in the armoury of a developer, enabling dialogue to query code, understand error messages and find out why stuff isn't working. It's also been very helpful in the creation of the python tests of CRUD functionality, where it can be pointed at a given view and asked to write a test to check whether the view functions correctly, I didn't find any issues in the AI's interpretation of the views for testing, this is probably because the views themselves were kept straigtforward and functional.
 
 ## Future Enhancements
 
