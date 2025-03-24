@@ -219,7 +219,8 @@ The project follows Agile methodology to ensure iterative development and contin
 
 The project board on GitHub is used to track tasks and progress. It includes columns for:
 
-*   **Backlog**: List of tasks to be completed.
+*   **Backlog**: List of tasks to be completed, bugs identified and features to be added.
+*   **To Do**: The active tasks for the current development cycle - akin to a sprint plan.
 *   **In Progress**: Tasks currently being worked on.
 *   **Done**: Tasks that are completed and approved.
 
@@ -229,9 +230,11 @@ You can view the project board [here](https://github.com/users/joe-aswonvos/proj
 
 Testing is an integral part of the development process to ensure the application works as expected. Key testing practices include:
 
-*   **Unit Testing**: Testing individual components and functions - this was conducted throughout development, to ensure everything worked.
+*   **Unit Testing**: Testing individual components and functions - this was conducted throughout development, to ensure everything worked, before moving onto the next user story.
 *   **Integration Testing**: Testing the interaction between different components.
-*   **Automated Testing**: Using tools to automate repetitive testing tasks.
+*   **Automated Testing**: Using tools to automate repetitive testing tasks. A number of straightforward automated tests of the CRUD functionality have been set up, to ensure that the appropriate records can be created, edited and deleted, in line with the functional views undertaking these actions.
+
+Code Testing
 
 ## Deployment
 

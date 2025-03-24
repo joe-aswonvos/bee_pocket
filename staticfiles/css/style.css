@@ -14,13 +14,13 @@
 
   /* Color palette */
   --primary-color: #f4be25; /* Yellow - accent color */
-  --secondary-color: #616161; /* Dark gray - backgrounds */
+  --secondary-color: #404040; /* Dark gray - backgrounds */
   --tertiary-color: #bfbfc1; /* Light gray - tertiary elements */
   --contrast-color: #eeeeee; /* Off-white - content areas */
 
   /* RGB values for opacity variants */
   --primary-color-rgb: 244, 190, 37;
-  --secondary-color-rgb: 97, 97, 97;
+  --secondary-color-rgb: 64, 64, 64;
   --tertiary-color-rgb: 191, 191, 193;
   --contrast-color-rgb: 238, 238, 238;
 
