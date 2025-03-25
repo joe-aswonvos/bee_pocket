@@ -230,7 +230,7 @@ footer::before {
 .toast-body {
   background-color: rgba(var(--contrast-color-rgb), 0.9);
   color: var(--secondary-color);
-  font-family: var(--secondary -font);
+  font-family: var(--secondary-font);
   padding: 10px;
   border-radius: 5px;
 }
