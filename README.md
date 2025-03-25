@@ -6,36 +6,38 @@ The repository for my Code Institute Bootcamp capstone project, after 14 weeks o
 
 ## Table of Contents
 
-1.  [Project Overview](#project-overview)
-2.  [Technologies Used](#technologies-used)
-3.  [Project Aims](#project-aims)
-4.  [User Roles/Personas](#user-rolespersonas)
-5.  [User Stories](#user-stories)
-6.  [User Experience Design](#user-experience-design)
-    *   [Landing Page](#landing-page)
-    *   [Admin Page](#admin-page)
-    *   [Create Page](#create-page)
-    *   [Pocket Page](#pocket-page)
-7.  [Creative Design Decisions](#creative-design-decisions)
-8.  [DataBase Design](#database-design)
-9.  [Application Breakdown](#application-breakdown)
-    *   [admin\_app](#admin_app)
-    *   [landing](#landing)
-    *   [create\_app](#create_app)
-    *   [pocket\_app](#pocket_app)
-10.  [Features](#features)
-11.  [Agile Methodology](#agile-methodology)
-12.  [Project Board](#project-board)
-13.  [Testing](#testing)
-    *   [Initial Testing](#initial-testing)
-        *   [Lighthouse Report](#lighthouse-report)
-            *   [Mobile](#mobile)
-            *   [Desktop](#desktop)
-        *   [CSS Testing (W3C)](#css-testing-w3c)
-        *   [HTML Testing (W3C)](#html-testing-w3c)
-14.  [Deployment](#deployment)
-15.  [Future Enhancements](#future-enhancements)
-16.  [Credits](#credits)
+1. [Project Overview](#project-overview)
+2. [Technologies Used](#technologies-used)
+3. [Project Aims](#project-aims)
+4. [User Roles/Personas](#user-rolespersonas)
+5. [User Stories](#user-stories)
+6. [User Experience Design](#user-experience-design)
+    - [Landing Page](#landing-page)
+    - [Admin Page](#admin-page)
+    - [Create Page](#create-page)
+    - [Pocket Page](#pocket-page)
+7. [Creative Design Decisions](#creative-design-decisions)
+8. [Database Design](#database-design)
+9. [Application Breakdown](#application-breakdown)
+    - [admin_app](#admin_app)
+    - [landing](#landing)
+    - [create_app](#create_app)
+    - [pocket_app](#pocket_app)
+10. [Features](#features)
+11. [Agile Methodology](#agile-methodology)
+12. [Project Board](#project-board)
+13. [Testing](#testing)
+    - [Initial Testing](#initial-testing)
+      - [Lighthouse Report](#lighthouse-report)
+         - [Mobile](#mobile)
+         - [Desktop](#desktop)
+      - [CSS Testing (W3C)](#css-testing-w3c)
+      - [HTML Testing (W3C)](#html-testing-w3c)
+14. [Deployment](#deployment)
+    - [Real-Time Testing/Alerts](#real-time-testingalerts)
+15. [Use of AI](#use-of-ai)
+16. [Future Enhancements](#future-enhancements)
+17. [Credits](#credits)
 
 ## Project Overview
 
@@ -298,6 +300,10 @@ The application is deployed on Heroku [here](https://joe-aswonvos-bee-pockets-74
 * Data is held on a postgreSQL server hosted by Code-Institute
 * The repository is held on GitHub and Heroku deploys the latest version of the main branch
 * Heroku settings contain all the relevant secret keys for the project to remain secure.
+
+### Real-Time Testing/Alerts
+
+To monitor the deployed application, Sentry was integrated as an error tracking and performance monitoring tool. Sentry provides real-time insights into application issues, such as unhandled exceptions, slow database queries, and performance bottlenecks. By capturing detailed error logs and stack traces, it allows for quick identification and resolution of problems, ensuring a smoother user experience. Additionally, Sentry's alerting system notifies the development team of critical issues, enabling proactive maintenance and minimizing downtime.
 
 ## Use of AI
 
