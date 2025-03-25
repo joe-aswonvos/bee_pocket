@@ -15,6 +15,7 @@ import os
 import sys
 from decouple import config
 import dj_database_url
+import sentry_sdk
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -196,3 +197,10 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     },
 }
+
+sentry_sdk.init(
+    dsn="https://6918d3886f63a77ecfad882990b69852@o4508733071360000.ingest.de.sentry.io/4509037854785616",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
